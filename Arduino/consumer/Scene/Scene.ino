@@ -15,8 +15,6 @@ unsigned long time = 0;
 void setup(){
   tmrpcm.speakerPin = 9; 
   
-  pinMode(3,OUTPUT); //LED Connected to analog pin 0
-  
   Wire.begin(0x12); 
   Wire.onReceive(receiveEvent);
 }
