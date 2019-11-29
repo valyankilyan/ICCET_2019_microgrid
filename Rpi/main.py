@@ -32,6 +32,7 @@ def change_scene_music_id():
 	for i in music_list:
 		print it, "-", i
 		it+= 1
+	print("0 - exit")
 	music_id =  input("Enter your choise: ")
 	os.system('clear')
 	if music_id > 3:
