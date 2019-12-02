@@ -4,8 +4,8 @@ import time
 import os
 
 ADDR_scene = 16
-scene_data = [1, 100] #sound id, sound level
-music_list = ["Soccer physics soundtrack", "Sergey's trap", "Shrek theme"]
+scene_data = [1, 0] #sound id, sound level, bassboost
+music_list = ["Soccer physics", "Shrek theme", "Never gonna give you up", "Never, never give you ya up", "From Vint", "Votting", "Dmitry", "John Sina"]
 
 ADDR_light = 17
 light_data = [100, 100, 100, 100]#bright, red, green, blue
@@ -47,14 +47,16 @@ def change_scene_music_id():
 	print("0 - exit")
 	music_id =  input("Enter your choise: ")
 	os.system('clear')
-	if music_id > 3:
+	if music_id >= music_list.len:
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
 		return music_id
 
+
 def writeData_scene():
 	print("Choise what do you want")
-	print "1 - Change music (now playing", music_list[scene_data[0] - 1], ")"
+	print "1 - Change music, now playing", music_list[scene_data[0] - 1]
+	print "2 - BASSBOOOST, now", ("on" if scene_data[1] else "off") 
 	print("0 - exit")
 	what = input("Enter your choise: ")
 	os.system('clear')
@@ -86,11 +88,11 @@ def change_vegetables_temerature():
 
 def writeData_vegetables():
 	print("Choise what do you want")
-	print "1 - Change temperature (", vegetables_data[0], "degrees of C)"
-	print "2 - Change brightness (", vegetables_data[1], " %)"
-	print "3 - Change red light level (", vegetables_data[2], " %)"
-	print "4 - Change green light level (", vegetables_data[3], " %)" 
-	print "5 - Change blue light level (", vegetables_data[4], " %)" 
+	print "1 - Change temperature ", vegetables_data[0], "degrees of C"
+	print "2 - Change brightness ", vegetables_data[1], " %"
+	print "3 - Change red light level ", vegetables_data[2], " %"
+	print "4 - Change green light level ", vegetables_data[3], " %" 
+	print "5 - Change blue light level ", vegetables_data[4], " %" 
 	print("0 - exit")
 	what = input("Enter your choise: ")
 	os.system('clear')
