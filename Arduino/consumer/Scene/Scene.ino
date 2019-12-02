@@ -16,8 +16,6 @@ char* music_list[9] = {
   "SILENSE",
   "Soccer.wav",
   "Shrek.wav",
-  "nevergonna.wav",
-  "nevernever.wav",
   "otvinta.wav",
   "golosovanie.wav",
   "dimooon.wav",
@@ -28,8 +26,6 @@ long long int music_len[9] = {
   99999999,//silence
   310000,//"Soccer.wav", 
   133000,//"Shrek theme", 
-  212000,//"Never gonna give you up", 
-  251000,//"Never, never give you ya up", 
   204000,//"From Vint", 
   240000,//"Votting", 
   66000,//"Dmitry"
