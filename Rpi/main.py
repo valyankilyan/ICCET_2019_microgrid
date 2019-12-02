@@ -54,7 +54,7 @@ def change_scene_music_id():
 
 def writeData_scene():
 	print("Choise what do you want")
-	print "1 - Change music ", music_list[scene_data[0]]
+	print "1 - Change music (now playing", music_list[scene_data[0] - 1], ")"
 	print("0 - exit")
 	what = input("Enter your choise: ")
 	os.system('clear')
