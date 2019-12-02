@@ -4,7 +4,7 @@ import time
 import os
 
 ADDR_scene = 16
-scene_data = [1, 0] #sound id, sound level, bassboost
+scene_data = [1, 0] #sound id, bassboost
 music_list = ["Soccer physics", "Shrek theme", "Never gonna give you up", "Never, never give you ya up", "From Vint", "Votting", "Dmitry", "John Sina"]
 
 ADDR_light = 17
@@ -65,7 +65,14 @@ def writeData_scene():
 		return
 	if what == 1:
 		scene_data[0] = change_scene_music_id()
-	if what > 1:
+	if what == 2:
+		print("choise bassboost")
+		cin = input("Enter 1 or 0: ")
+		if cin == 0 or cin == 1:
+			scene_data[0] = cin
+		else:
+			what = 100
+	if what > 2:
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
 		writeData(ADDR_scene, scene_data)
