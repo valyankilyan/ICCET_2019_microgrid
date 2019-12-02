@@ -47,7 +47,7 @@ def change_scene_music_id():
 	print("0 - exit")
 	music_id =  input("Enter your choise: ")
 	os.system('clear')
-	if music_id >= len(music_list):
+	if music_id >= len(music_list)+1:
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
 		return music_id
@@ -69,13 +69,13 @@ def writeData_scene():
 		print("choise bassboost")
 		cin = input("Enter 1 or 0: ")
 		if cin == 0 or cin == 1:
-			scene_data[0] = cin
+			scene_data[1] = cin
 		else:
 			what = 100
 	if what > 2:
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
-		writeData(ADDR_scene, scene_data)
+		writeData(ADDR_scene, scene_data)x
 
 
 
