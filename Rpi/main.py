@@ -11,19 +11,31 @@ ADDR_light = 17
 light_data = [100, 100, 100, 100]#bright, red, green, blue
 
 ADDR_radio = 18
-radio_data = [1]#on or off
+radio_data = [1]#on or off будет висеть на генераторах
 
 ADDR_vegetables = 19
 vegetables_data = [30, 100, 100, 100, 100]#temperature, bright, red, green, blue
 
 ADDR_wheel = 20
-wheel_data = [100, 100]#speed, bright
+wheel_data = [100, 100]#speed, bright будет висеть на генераторах
 
 
 def writeData(addr, data):
 	with SMBus(1) as bus:
    		msg = i2c_msg.write(addr, data)
    		bus.i2c_rdwr(msg)	
+
+
+def change_level():
+	print("Choise level from 0 to 100 %")
+	out = input("Enter level: ")
+	os.system('clear')
+
+	if out <= 100 and out >= 0:
+		return out
+	else:
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " bad range")
+
 
 
 def change_scene_music_id():
@@ -36,55 +48,74 @@ def change_scene_music_id():
 	music_id =  input("Enter your choise: ")
 	os.system('clear')
 	if music_id > 3:
-		print(Fore.RED + "##ERROR" + Fore.WHITE + " No, sorry, we haven't")
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
 		return music_id
 
 def writeData_scene():
 	print("Choise what do you want")
-	print("1 - Change music")
-	print("2 - Change music level")
+	print "1 - Change music ", music_list[scene_data[0]]
 	print("0 - exit")
 	what = input("Enter your choise: ")
 	os.system('clear')
-
-	music_id = scene_data[0]
-	soumd_level = scene_data[1]
-
+	
 	if what == 0:
 		return
 	if what == 1:
-		music_id = change_scene_music_id()
-	if what == 2:
-		return
-	if what > 2:
-		print(Fore.RED + "##ERROR" + Fore.WHITE + " No, sorry, we haven't")
+		scene_data[0] = change_scene_music_id()
+	if what > 1:
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
-		scene_data[0] = music_id
 		writeData(ADDR_scene, scene_data)
 
 
 
-def writeData_light():
-	data = []
+#def writeData_light():
+	
+#def writeData_radio():
 
-def writeData_radio():
-	data = []
+
+def change_vegetables_temerature():
+	print("Choise temperature from 20 to 80 degrees of celsium")
+	temp = input("Enter temperature")	
+	os.system('clear')
+	if temp <= 80 and temp >= 20:
+		return temp
+	else:
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " bad range")
 
 def writeData_vegetables():
-	data = []
+	print("Choise what do you want")
+	print "1 - Change temperature ", vegetables_data[0], " degrees of C"
+	print "2 - Change brightness", vegetables_data[1], " %"
+	print "3 - Change red light level", vegetables_data[2], " %"
+	print "4 - Change green light level", vegetables_data[3], " %" 
+	print "5 - Change blue light level", vegetables_data[4], " %" 
+	print("0 - exit")
+	what = input("Enter your choise: ")
+	os.system('clear')
+	if what == 1:
+		vegetables_data[0] = change_vegetables_temerature()
+	if what >= 2 and what <= 5:
+		vegetables_data[what - 1] = change_level()
+	if what > 5:
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
+	else:
+		writeData(ADDR_vegetables, vegetables_data)
 
-def writeData_wheel():
-	data = []
+	
+
+#def writeData_wheel():
+	
 
 
 def prosumer_choise():
 	print("Choise what do you want")
 	print("1 - Scene")
-	print("2 - ")
-	print("3 - ")
-	print("4 - ")
-	print("5 - ")
+	print("2 - Light")
+	print("3 - Radio")
+	print("4 - Vegetables")
+	print("5 - Wheel")
 	print("0 - exit")
 	what = input("Enter your choise: ")
 	os.system('clear')
@@ -101,7 +132,7 @@ def prosumer_choise():
 	if what == 5:
 		writeData_wheel()
 	if what > 5:
-		print(Fore.RED + "##ERROR" + Fore.WHITE + " No, sorry, we haven't")
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 		
 
 def consumer_choise():
@@ -122,7 +153,7 @@ def consumer_choise():
 	if what == 3:
 		writeData3()
 	if what > 3:
-		print(Fore.RED + "##ERROR" + Fore.WHITE + " No, sorry, we haven't")
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 
 
 while True:
@@ -136,4 +167,4 @@ while True:
 	if what == 2:
 		consumer_choise()
 	if what != 1 and what != 2:
-		print(Fore.RED + "##ERROR" + Fore.WHITE + " No, sorry, we haven't")
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
