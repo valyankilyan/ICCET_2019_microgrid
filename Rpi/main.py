@@ -77,7 +77,7 @@ def writeData_scene():
 
 def change_vegetables_temerature():
 	print("Choise temperature from 20 to 80 degrees of celsium")
-	temp = input("Enter temperature")	
+	temp = input("Enter temperature: ")	
 	os.system('clear')
 	if temp <= 80 and temp >= 20:
 		return temp
@@ -86,11 +86,11 @@ def change_vegetables_temerature():
 
 def writeData_vegetables():
 	print("Choise what do you want")
-	print "1 - Change temperature ", vegetables_data[0], " degrees of C"
-	print "2 - Change brightness", vegetables_data[1], " %"
-	print "3 - Change red light level", vegetables_data[2], " %"
-	print "4 - Change green light level", vegetables_data[3], " %" 
-	print "5 - Change blue light level", vegetables_data[4], " %" 
+	print "1 - Change temperature (", vegetables_data[0], "degrees of C)"
+	print "2 - Change brightness (", vegetables_data[1], " %)"
+	print "3 - Change red light level (", vegetables_data[2], " %)"
+	print "4 - Change green light level (", vegetables_data[3], " %)" 
+	print "5 - Change blue light level (", vegetables_data[4], " %)" 
 	print("0 - exit")
 	what = input("Enter your choise: ")
 	os.system('clear')
@@ -109,7 +109,7 @@ def writeData_vegetables():
 	
 
 
-def prosumer_choise():
+def consumer_choise():
 	print("Choise what do you want")
 	print("1 - Scene")
 	print("2 - Light")
@@ -135,7 +135,7 @@ def prosumer_choise():
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 		
 
-def consumer_choise():
+def prosumer_choise():
 	print("Choise what do you want")
 	print("1 - ")
 	print("2 - ")
@@ -158,13 +158,13 @@ def consumer_choise():
 
 while True:
 	print("Choise what do you want")
-	print("1 - prosumers")
-	print("2 - consumers")
+	print("1 - consumers")
+	print("2 - prosumers")
 	what = input("Enter your choise: ")
 	os.system('clear')
 	if what == 1:
-		prosumer_choise()
-	if what == 2:
 		consumer_choise()
+	if what == 2:
+		prosumer_choise()
 	if what != 1 and what != 2:
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
