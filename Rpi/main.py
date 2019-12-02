@@ -11,13 +11,13 @@ ADDR_light = 17
 light_data = [100, 100, 100, 100]#bright, red, green, blue
 
 ADDR_radio = 18
-radio_data = [1]#on or off будет висеть на генераторах
+radio_data = [1] #on or off will be in prosumers data
 
 ADDR_vegetables = 19
 vegetables_data = [30, 100, 100, 100, 100]#temperature, bright, red, green, blue
 
 ADDR_wheel = 20
-wheel_data = [100, 100]#speed, bright будет висеть на генераторах
+wheel_data = [100, 100]#speed, bright will be in prosumers data
 
 
 def writeData(addr, data):
