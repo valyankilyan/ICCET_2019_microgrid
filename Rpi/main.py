@@ -47,7 +47,7 @@ def change_scene_music_id():
 	print("0 - exit")
 	music_id =  input("Enter your choise: ")
 	os.system('clear')
-	if music_id >= music_list.len:
+	if music_id >= len(music_list):
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
 		return music_id
