@@ -11,7 +11,7 @@ TMRpcm tmrpcm;   // create an object for use in this sketch
  
 bool work = 1;
 int sound_id = 1, old_sound_id = 0;
-bool boost = 1, old_boost = 0;
+bool boost = 1, old_boost = 1;
 long long int last_music_time = 0; 
 
 char* music_list[SOUND_SIZE] = {
@@ -45,13 +45,14 @@ void setup(){
  
  
 void loop(){  
-  if(old_boost != boost){
-    old_boost = boost;
-    tmrpcm.volume(boost);
-    }
+  while(boost != old_boost){
+    tmrpcm.volume(boost > old_boost); 
+    old_boost+= (boost > old_boost ? 1 : -1);  
+  } 
 
   if(millis() - last_music_time > music_len[sound_id]){
-    sound_id = (sound_id % (SOUND_SIZE - 1)) + 1;
+    old_sound_id--;
+    //sound_id = (sound_id % (SOUND_SIZE - 1)) + 1;
   }
   
   if(old_sound_id != sound_id){    
@@ -70,7 +71,7 @@ void loop(){
 void receiveEvent(int bytes) {
   if(bytes > 1){
     sound_id = Wire.read() % SOUND_SIZE;
-    boost = Wire.read() % 2;
+    boost = Wire.read() % 5;
     Serial.print("sound_id = ");
     Serial.println((int)sound_id);
     Serial.print("boost = ");

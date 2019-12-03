@@ -70,9 +70,9 @@ def writeData_scene():
 			scene_data[0] = change_scene_music_id()
 		if what == 2:
 			print("choise bassboost")
-			cin = input("Enter 1 or 0: ")
-			if cin == 0 or cin == 1:
-				scene_data[1] = cin+2;
+			cin = input("Enter from 0 to 4: ")
+			if cin <= 4 and cin >= 0:
+				scene_data[1] = cin;
 			else:
 				what = 100
 			os.system('clear')
