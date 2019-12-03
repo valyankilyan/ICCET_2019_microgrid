@@ -22,8 +22,9 @@ wheel_data = [100, 100]#speed, bright will be in prosumers data
 
 def writeData(addr, data):
 	with SMBus(1) as bus:
-   		msg = i2c_msg.write(addr, data)
-   		bus.i2c_rdwr(msg)	
+		if(open(addr)):
+   			msg = i2c_msg.write(addr, data)
+   			bus.i2c_rdwr(msg)	
 
 
 def change_level():
