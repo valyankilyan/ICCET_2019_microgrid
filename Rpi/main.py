@@ -5,7 +5,7 @@ import os
 
 ADDR_scene = 16
 scene_data = [1, 0] #sound id, bassboost
-music_list = ["Soccer physics", "Shrek theme", "From Vint", "Votting", "Dmitry", "John Sina"]
+music_list = ["Soccer physics", "Shrek theme", "From Vint", "Votting", "Dmitry", "John Sina", "SILENCE"]
 
 ADDR_light = 17
 light_data = [100, 100, 100, 100]#bright, red, green, blue
@@ -47,6 +47,8 @@ def change_scene_music_id():
 	print("0 - exit")
 	music_id =  input("Enter your choise: ")
 	os.system('clear')
+	if music_id == 0:
+		return scene_data[0]
 	if music_id >= len(music_list)+1:
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
@@ -70,7 +72,7 @@ def writeData_scene():
 			print("choise bassboost")
 			cin = input("Enter 1 or 0: ")
 			if cin == 0 or cin == 1:
-				scene_data[1] = cin
+				scene_data[1] = cin+2;
 			else:
 				what = 100
 			os.system('clear')

@@ -4,15 +4,17 @@
 #include <TMRpcm.h>           //  also need to include this library...
 #include <SPI.h>
 #include <Wire.h>
+
+#define SOUND_SIZE 7
  
 TMRpcm tmrpcm;   // create an object for use in this sketch
  
 bool work = 1;
-int sound_id = 2, old_sound_id = 0;
-bool boost = 0, old_boost = 0;
+int sound_id = 1, old_sound_id = 0;
+bool boost = 1, old_boost = 0;
 long long int last_music_time = 0; 
 
-char* music_list[9] = {
+char* music_list[SOUND_SIZE] = {
   "SILENSE",
   "Soccer.wav",
   "Shrek.wav",
@@ -22,7 +24,7 @@ char* music_list[9] = {
   "John.wav"
   };
   
-long long int music_len[9] = {
+long long int music_len[SOUND_SIZE] = {
   99999999,//silence
   310000,//"Soccer.wav", 
   133000,//"Shrek theme", 
@@ -48,9 +50,9 @@ void loop(){
     tmrpcm.volume(boost);
     }
 
-  //if(millis() - last_music_time > music_len[sound_id]){
-  //  sound_id = ((sound_id+1) % 8) + 1;
-  //}
+  if(millis() - last_music_time > music_len[sound_id]){
+    sound_id = (sound_id % (SOUND_SIZE - 1)) + 1;
+  }
   
   if(old_sound_id != sound_id){    
     old_sound_id = sound_id;
@@ -67,10 +69,11 @@ void loop(){
  
 void receiveEvent(int bytes) {
   if(bytes > 1){
-    sound_id = Wire.read();
-    boost = Wire.read();
+    sound_id = Wire.read() % SOUND_SIZE;
+    boost = Wire.read() % 2;
+    Serial.print("sound_id = ");
     Serial.println((int)sound_id);
-    work = Wire.read();
-    Serial.println(work);
+    Serial.print("boost = ");
+    Serial.println(boost);
   }
 }
