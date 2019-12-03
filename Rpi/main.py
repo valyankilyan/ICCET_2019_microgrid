@@ -5,7 +5,7 @@ import os
 
 ADDR_scene = 16
 scene_data = [1, 0] #sound id, bassboost
-music_list = ["Soccer physics", "Shrek theme", "From Vint", "Votting", "Dmitry", "John Sina", "SILENCE"]
+music_list = ["Shrek theme", "From Vint", "Votting", "Soccer physics", "Dmitry", "John Sina", "SILENCE"]
 
 ADDR_light = 17
 light_data = [100, 100, 100, 100]#bright, red, green, blue

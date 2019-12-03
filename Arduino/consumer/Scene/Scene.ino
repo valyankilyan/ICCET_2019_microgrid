@@ -11,15 +11,15 @@ TMRpcm tmrpcm;   // create an object for use in this sketch
  
 bool work = 1;
 int sound_id = 1, old_sound_id = 0;
-bool boost = 1, old_boost = 1;
+int boost = 2, old_boost = 1;
 long long int last_music_time = 0; 
 
 char* music_list[SOUND_SIZE] = {
   "SILENSE",
-  "Soccer.wav",
   "Shrek.wav",
   "otvinta.wav",
   "golosovanie.wav",
+  "Soccer.wav",
   "dimooon.wav",
   "John.wav"
   };
