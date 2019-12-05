@@ -1,7 +1,7 @@
 // Этот код обязательно для Arduino Nano или Arduino Mega
 
 #include "ACS712.h"
-#include <Wire.h>ч
+#include <Wire.h>
 
 float R1 = 100000.0; // resistance of R1 (100K) 
 float R2 = 10000.0; // resistance of R2 (10K) 
@@ -12,7 +12,7 @@ uint8_t power_3 = 0;
 uint8_t power_4 = 0;
 uint8_t power_5 = 0;
 
-uint8_t voltage = 0; 
+uint8_t U = 0; 
 
 float sum_1 = 0;
 float sum_2 = 0;
@@ -20,11 +20,11 @@ float sum_3 = 0;
 float sum_4 = 0;
 float sum_5 = 0;
 
-ACS712 sensor_1(ACS712_30A, A1);
-ACS712 sensor_2(ACS712_30A, A2);
-ACS712 sensor_3(ACS712_30A, A3);
-ACS712 sensor_4(ACS712_30A, A4);
-ACS712 sensor_5(ACS712_30A, A5);
+ACS712 sensor_1(ACS712_20A, A1);
+ACS712 sensor_2(ACS712_20A, A2);
+ACS712 sensor_3(ACS712_20A, A3);
+ACS712 sensor_4(ACS712_20A, A4);
+ACS712 sensor_5(ACS712_20A, A5);
 
 void setup() {
   
@@ -58,18 +58,18 @@ void setup() {
 
 void loop() {
 
-      float U = analogRead(A6);
+      U = analogRead(A6);
       
       U = ((U * 5.0)/1024.0) / (R2/(R1+R2));
       
       if (U<0.09)
         U=0.0;
 
-      float I_1 = sensor_1.getCurrentAC();
-      float I_2 = sensor_2.getCurrentAC();
-      float I_3 = sensor_3.getCurrentAC();
-      float I_4 = sensor_4.getCurrentAC();
-      float I_5 = sensor_5.getCurrentAC();
+      float I_1 = sensor_1.getCurrentDC();
+      float I_2 = sensor_2.getCurrentDC();
+      float I_3 = sensor_3.getCurrentDC();
+      float I_4 = sensor_4.getCurrentDC();
+      float I_5 = sensor_5.getCurrentDC();
     
       sum_1 = U*I_1;
       sum_2 = U*I_2;
@@ -77,14 +77,13 @@ void loop() {
       sum_4 = U*I_4;
       sum_5 = U*I_5;
 
-      if(U < 13.0){
+      if(U < 7){
         analogWrite(4, 0);
         analogWrite(5, 0);
         analogWrite(6, 0);
         analogWrite(9, 0);
         analogWrite(10, 0); 
-      }
-      if(U > 13.0){
+      }else{
         analogWrite(4, 255*(power_1/100));
         analogWrite(5, 255*(power_1/100));
         analogWrite(6, 255*(power_1/100));
@@ -92,7 +91,7 @@ void loop() {
         analogWrite(10, 255*(power_1/100));   
       }
 
-      voltage = U*1000;
+//      voltage = U*1000;
       
 }
 
@@ -107,7 +106,6 @@ void receiveEvent(int bytes) {
 }
 
 void requestEvent(){
-  Wire.write((uint8_t *)&voltage, sizeof(voltage)); //Заряд в виде 15'231
   
   Wire.write("1");
   Wire.write((uint8_t *)&sum_1, sizeof(&sum_1));//First
@@ -124,11 +122,6 @@ void requestEvent(){
   Wire.write("5");
   Wire.write((uint8_t *)&sum_5, sizeof(&sum_5));
 
+  Wire.write((uint8_t *)&U, sizeof(U)); 
+
 }
-
-
-
-
-
-
-
