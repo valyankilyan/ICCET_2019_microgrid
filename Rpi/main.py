@@ -2,6 +2,8 @@ from smbus2 import SMBus, i2c_msg
 from colorama import Fore
 import time
 import os
+import sys
+
 
 ADDR_scene = 16
 scene_data = [1, 0] #sound id, bassboost
@@ -10,24 +12,38 @@ music_list = ["Shrek theme", "From Vint", "Votting", "Soccer physics", "Dmitry",
 ADDR_light = 17
 light_data = [100, 100, 100, 100]#bright, red, green, blue
 
-ADDR_radio = 18
-radio_data = [1] #on or off will be in prosumers data
-
-ADDR_vegetables = 19
+ADDR_vegetables = 18
 vegetables_data = [30, 100, 100, 100, 100]#temperature, bright, red, green, blue
 
-ADDR_wheel = 20
-wheel_data = [100, 100]#speed, bright will be in prosumers data
+# radio and wheel have not address and set with generators
+radio_data = [1]#on or off
+wheel_data = [100, 100]#speed and light in %
+
+
+ADDR_h_gen = 32
+ADDR_h_gen = [1+2+4+8+16, 0, 0, 0, 0, 0]#consumers bit in bytes 0-sc, 1-lt, 2-veg, 3-rd, 4-wh; 
+# 	scene_power, light_power, radio_power, vegetables_power, wheel power;
+
+
+	
 
 
 def writeData(addr, data):
 	with SMBus(1) as bus:
-   		msg = i2c_msg.write(addr, data)
-   		bus.i2c_rdwr(msg)	
+		try:
+    		msg = i2c_msg.write(addr, data)
+   			bus.i2c_rdwr(msg)	
+		except IOError as e:
+    		print "I/O error({0}): {1}".format(e.errno, e.strerror)
+		except ValueError:
+    		print "Could not convert data to an integer."
+		except:
+    		print "Unexpected error:", sys.exc_info()[0]
+		    raise
 
 
-def change_level():
-	print("Choise level from 0 to 100 %")
+def change_level(percent):
+	print "Choise level from 0 to 100 %, now it's", percent, "%"
 	out = input("Enter level: ")
 	os.system('clear')
 
@@ -83,7 +99,8 @@ def writeData_scene():
 
 
 
-#def writeData_light():
+def writeData_light():
+
 	
 #def writeData_radio():
 
@@ -110,7 +127,7 @@ def writeData_vegetables():
 	if what == 1:
 		vegetables_data[0] = change_vegetables_temerature()
 	if what >= 2 and what <= 5:
-		vegetables_data[what - 1] = change_level()
+		vegetables_data[what - 1] = change_level(vegetables_data[what - 1])
 	if what > 5:
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 	else:
@@ -118,7 +135,23 @@ def writeData_vegetables():
 
 	
 
-#def writeData_wheel():
+def writeData_wheel():
+	print("Choise what do you want")
+	print "1 - Change wheel speed ", wheel_data[0], " %"
+	print "2 - Change brightness ", wheel_data[1], " %"
+	print("0 - exit")
+	what = input("Enter your choise: ")	
+	os.system('clear')
+	if what == 0:
+		return
+	if what == 1:
+		wheel_data[0] = change_level(wheel_data[0])
+	if what == 2:
+		wheel_data[1] = change_level(wheel_data[1])
+	if what > 2: 
+		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
+	else:
+		writeData(ADDR_light, light_data)
 	
 
 
@@ -148,9 +181,12 @@ def consumer_choise():
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
 		
 
-def prosumer_choise():
+def writeData_hydrate_generator():
+
+
+def generator_choise():
 	print("Choise what do you want")
-	print("1 - ")
+	print("1 - hydrate generator")
 	print("2 - ")
 	print("3 - ")
 	print("0 - exit")
@@ -160,7 +196,7 @@ def prosumer_choise():
 	if what == 0:
 		return
 	if what == 1:
-		writeData1()
+		writeData_hydrate_generator()
 	if what == 2:
 		writeData2()
 	if what == 3:
@@ -172,12 +208,12 @@ def prosumer_choise():
 while True:
 	print("Choise what do you want")
 	print("1 - consumers")
-	print("2 - prosumers")
+	print("2 - generators")
 	what = input("Enter your choise: ")
 	os.system('clear')
 	if what == 1:
 		consumer_choise()
 	if what == 2:
-		prosumer_choise()
+		generator_choise()
 	if what != 1 and what != 2:
 		print(Fore.RED + "##ERROR" + Fore.WHITE + " we haven't this command")
