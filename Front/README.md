@@ -1,4 +1,5 @@
 # school
+Перед всеми хренями нужно поставить Node.js
 
 ## Project setup
 ```
