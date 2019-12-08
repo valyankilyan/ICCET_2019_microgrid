@@ -31,8 +31,7 @@ ADDR_h_gen = [1+2+4+8+16, 0, 0, 0, 0, 0]#consumers bit in bytes 0-sc, 1-lt, 2-ve
 def writeData(addr, data):
 	with SMBus(1) as bus:
 		try:
-    		msg = i2c_msg.write(addr, data)
-   			bus.i2c_rdwr(msg)	
+   			bus.i2c_rdwr(i2c_msg.write(addr, data))	
 		except IOError as e:
     		print "I/O error({0}): {1}".format(e.errno, e.strerror)
 		except ValueError:

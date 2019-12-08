@@ -1,7 +1,9 @@
 from Error import Error
+from Data import Data
 import os
 
 error = Error()
+data = Data()
 
 ADDR_scene = 16
 scene_data = [1, 0] #sound id, bassboost
@@ -13,7 +15,7 @@ class Scene:
 	def __inint__(self):
 		print("init Scene")
 
-	def change_music_id():
+	def change_music_id(self):
 		print("Choise track")
 		it = 1;
 		for i in music_list:
@@ -44,7 +46,7 @@ class Scene:
 				return
 			
 			if what == 1:
-				scene_data[0] = change_music_id()
+				scene_data[0] = self.change_music_id()
 			
 			if what == 2:
 				print("choise bassboost")
@@ -58,4 +60,4 @@ class Scene:
 			if what > 2 or what < 0:
 				error.log("scene")
 			else:
-				writeData(ADDR_scene, scene_data)
+				data.write(ADDR_scene, scene_data)
