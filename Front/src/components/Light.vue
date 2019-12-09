@@ -25,13 +25,38 @@
         
 
         <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Свет в домах %:</h3>
+            <h3 class="pl-3">Уровень красного:</h3>
              
                
                 <v-slider
-                v-model="slider"
+                v-model="sliderRed"
                 thumb-label
                 class="ma-0"
+                 color="red"
+                ></v-slider>
+              
+        </v-container>
+        <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Уровень зеленого:</h3>
+             
+               
+                <v-slider
+                v-model="sliderGreen"
+                thumb-label
+                class="ma-0"
+                 color="green"
+                ></v-slider>
+              
+        </v-container>
+        <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Уровень голубого:</h3>
+             
+               
+                <v-slider
+                v-model="sliderBlue"
+                thumb-label
+                class="ma-0"
+              
                 ></v-slider>
               
         </v-container>

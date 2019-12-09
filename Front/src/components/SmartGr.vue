@@ -23,14 +23,23 @@
           
 
         <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Процент% Нагревания:</h3>
+            <h3 class="pl-3">Температура в 	&#8451;:</h3>
              
                
                 <v-slider
                 v-model="slider"
                 thumb-label
+                 max="40"
+              min="20"
                 class="ma-0"
                 ></v-slider>
+              
+        </v-container>
+         <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Текущая температура:<span> 22	&#8451;</span></h3>
+             
+               
+                
               
         </v-container>
         <v-container fluid class="d-flex mb-0 pb-0">

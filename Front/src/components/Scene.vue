@@ -15,7 +15,7 @@
    
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Подача тока</h3>
+            <h3 class="pl-3">Подача тока:</h3>
             <span  @click="but = !but"><v-switch  v-model="switch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
@@ -32,15 +32,26 @@
         </v-col>
 
         <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Громкость:</h3>
+            <h3 class="pl-3">Повтор трека:</h3>
              
-               
-                <v-slider
-                v-model="slider"
-                thumb-label
-                class="ma-0"
-                ></v-slider>
-              
+            <span class="ma-0 pa-0 ml-2 mt-1">   
+             <v-checkbox
+             class="ma-0 pa-0 "
+                v-model="ex4"
+                label=""
+                color="red"
+                value="red"
+                hide-details
+              ></v-checkbox>
+            </span>  
+        </v-container>
+
+         <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Bassboosted:</h3>
+             
+                        <span  @click="but2 = !but2"><v-switch  v-model="switch2" :label="``" class="ma-0 ml-3 pa-0" >
+                          </v-switch></span><span>{{but2 ? 'on' : 'off'}}</span>
+
         </v-container>
         
     </section>
@@ -57,7 +68,7 @@
           <v-expansion-panel-content >
               <section class="d-flex mb-0 pb-0">
               <span>Солненая Панель<br>3₽/кВт</span>
-            <v-switch v-model="switch2" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
+            <v-switch v-model="switch3" :label="``" class="d-flex ma-0 ml-3 pa-0"  color="red"></v-switch>
             <span>Аккумулятор<br>5₽/кВт</span>
               </section>
           </v-expansion-panel-content>
@@ -131,10 +142,12 @@
   export default {
     data () {
       return {
-        but:false, 
+        but:false,
+        but2:false, 
         switch1: false,
         switch2: false,
-        items: ['Человечская музыка', 'Шрек musik', 'Jazz', 'Rock'],
+        switch3: false,
+        items: ['Джон Сина', 'Шрек musik', 'Димон', 'Человеческая'],
         pays: [
           {
             name: '1:45:67',

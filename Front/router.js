@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from "./src/components/Index"
 import Polls from "./src/components/Polls"
 import Admin from "./src/components/Admin"
-import Test from "./src/components/Test"
+
 import Radio from "./src/components/Radio"
 import Wheel from "./src/components/Wheel"
 import Scene from "./src/components/Scene"
@@ -64,12 +64,7 @@ export default new Router({
             name: 'wheel',
             component: Wheel,
             props: true,
-        },
-        {
-            path: '/test/',
-            name: 'test',
-            component: Test,
-            props: true,
         }
+        
     ]
 })

@@ -47,11 +47,12 @@
               ></v-text-field>
             </v-col>
            
-            <span class="ma-0 pa-0 pl-5 mb-5 d-flex"><v-btn color="cyan lighten-1 " text>Войти</v-btn></span>
+          
 
           
 
     </section>
+      <span class="ma-0 pa-0 pl-5 mb-5 "><v-btn color="cyan lighten-1 " text>Войти</v-btn></span>
 
 
   
