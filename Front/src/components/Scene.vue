@@ -147,7 +147,7 @@
         switch1: false,
         switch2: false,
         switch3: false,
-        items: ['Джон Сина', 'Шрек musik', 'Димон', 'Человеческая'],
+        items: ['Джон Сина', 'Шрек musik', 'Димон', 'Атвинта','Физикс'],
         pays: [
           {
             name: '1:45:67',

@@ -1,6 +1,6 @@
 <template>
      <v-card
-    class="mx-auto my-10"
+    class="mx-auto my-10 pb-3"
     max-width="400"
   >
     <v-img
@@ -15,14 +15,6 @@
         Карельские Энергетики
       </v-card-subtitle>
   
-
-   
- 
-        
-        
-            
-
-
             <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
         
               <v-select
@@ -31,6 +23,7 @@
               class="ma-0 pa-0 ml-6 "
               ></v-select>
           </v-col>
+
    <section class="d-flex ">
            <v-col cols="12" sm="6" class="ma-0 pa-0 pl-6 d-flex">
               <v-text-field
@@ -47,45 +40,16 @@
               ></v-text-field>
             </v-col>
            
-          
-
-          
 
     </section>
-      <span class="ma-0 pa-0 pl-5 mb-5 "><v-btn color="cyan lighten-1 " text>Войти</v-btn></span>
-
-
-  
-                
-
-     
-
-   
-
-
-
-    
-    
-
-
-
+    <span class="ma-0 pa-0 pl-5  ">
+    <router-link v-bind:to="linkk" style="text-decoration: none; color: white">
+      <v-btn color="cyan lighten-1" text>Войти</v-btn>
+    </router-link>
+    </span>
 
   </v-card>
 </template>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
 
 
 <style>
@@ -100,6 +64,7 @@
   export default {
     data () {
       return {
+        linkk: 'radio',
         show1: false,
         items: ['Колесо обозрения', 'Сцена', 'Радио', 'Освещение','Умная грядка','Admin'],
         password: '',

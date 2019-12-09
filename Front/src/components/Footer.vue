@@ -17,16 +17,7 @@
             >
                 {{ link }}
             </v-btn>
-            <router-link to="/polls" style="text-decoration: none; color: white">
-            <v-btn
-                    color="white"
-                    text
-                    rounded
-                    class="my-2"
-            >
-                All polls
-            </v-btn>
-            </router-link>
+           
             <router-link to="/admin" style="text-decoration: none; color: white">
             <v-btn
                     color="white"
@@ -34,7 +25,7 @@
                     rounded
                     class="my-2"
             >
-                Dashboard
+                Admin
             </v-btn>
             </router-link>
             <router-link to="/wheel" style="text-decoration: none; color: white">
@@ -101,3 +92,8 @@
         data: () => ({}),
     }
 </script>
+
+
+
+
+ 
