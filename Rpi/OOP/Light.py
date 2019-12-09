@@ -1,6 +1,6 @@
 class Light:
 	
-	def __inint__(self):
+	def __init__(self):
 		print("init Light")
 
 	def choise(self):

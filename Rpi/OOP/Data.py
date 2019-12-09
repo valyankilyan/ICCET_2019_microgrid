@@ -14,7 +14,7 @@ class Data:
 		with SMBus(1) as bus:
 			try:
 				msg = i2c_msg.write(addr, data)
-	   			bus.i2c_rdwr(msg)	
+				bus.i2c_rdwr(msg)	
 			
 			except IOError as e:
 				print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -27,4 +27,4 @@ class Data:
 				raise
 
 	def read(self):
-
+		print "read"

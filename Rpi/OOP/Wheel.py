@@ -1,6 +1,6 @@
 class Wheel:
 	
-	def __inint__(self):
+	def __init__(self):
 		print("init Wheel")
 
 	def choise(self):

@@ -2,7 +2,7 @@ from colorama import Fore, Style
 
 class Error:
 	
-	def __inint__(self):
+	def __init__(self):
 		print("init Error")
 
 	def log(self, where):

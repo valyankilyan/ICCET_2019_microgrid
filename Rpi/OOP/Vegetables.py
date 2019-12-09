@@ -1,6 +1,6 @@
 class Vegetables:
 	
-	def __inint__(self):
+	def __init__(self):
 		print("init Vegetables")
 
 	def choise(self):
