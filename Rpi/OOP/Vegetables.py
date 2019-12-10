@@ -36,7 +36,7 @@ class Vegetables:
 				var.vegetables_data[0] = self.change_temperature()
 			
 			if choise >= 2 and choise <= 5:
-				var.vegetables_data[choise - 1] = change_level(var.vegetables_data[choise - 1])
+				var.vegetables_data[choise - 1] = change.level(var.vegetables_data[choise - 1])
 			
 			if choise > 5 and choise < 0:
 				error.log("vegetables")

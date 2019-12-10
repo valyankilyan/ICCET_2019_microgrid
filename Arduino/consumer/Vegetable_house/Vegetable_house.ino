@@ -15,7 +15,7 @@ void setup() {
   for(int i = 0; i < 3; i++)
     pinMode(light_pin[i], OUTPUT);
 
-  Wire.begin(0x14); 
+  Wire.begin(0x12); 
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
 }
