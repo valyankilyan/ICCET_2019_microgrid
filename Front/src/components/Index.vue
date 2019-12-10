@@ -18,9 +18,21 @@
             <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
         
               <v-select
-              :items="items"
-              label="Имя пользователя"
+              id="pop"
+               v-model="select"
+            :hint="`${select.state}`"
+            :items="items"
+            item-text="state"
+            
+            label="Выберете пользователя"
               class="ma-0 pa-0 ml-6 "
+            
+              clearable
+               persistent-hint
+            return-object
+            single-line
+             
+             
               ></v-select>
           </v-col>
 
@@ -42,9 +54,9 @@
            
 
     </section>
-    <span class="ma-0 pa-0 pl-5  ">
-    <router-link v-bind:to="linkk" style="text-decoration: none; color: white">
-      <v-btn color="cyan lighten-1" text>Войти</v-btn>
+    <span class="ma-0 pa-0 pl-5  " id="elem">
+    <router-link v-bind:to="select.state" style="text-decoration: none; color: white">
+      <v-btn color="cyan lighten-1"  text>войти</v-btn>
     </router-link>
     </span>
 
@@ -63,16 +75,33 @@
 <script>
   export default {
     data () {
+  
+     
+
+
+  
       return {
-        linkk: 'radio',
+        
+         
+        linkk: '',
         show1: false,
-        items: ['Колесо обозрения', 'Сцена', 'Радио', 'Освещение','Умная грядка','Admin'],
+         select: { state: '' },
+        items: [
+        { state: 'Колесо обозрения'},
+        { state: 'Сцена'},
+        { state: 'Радио' },
+        { state: 'Освещение' },
+        { state: 'Умная грядка' },
+        { state: 'Admin' }
+        ],
         password: '',
         rules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 4 || 'Min 4 characters',
           emailMatch: () => ('The email and password you entered don\'t match'),
         },
+     
+  
       }
     },
   }

@@ -43,6 +43,7 @@
                 <v-slider
                 v-model="sliderGreen"
                 thumb-label
+                
                 class="ma-0"
                  color="green"
                 ></v-slider>
