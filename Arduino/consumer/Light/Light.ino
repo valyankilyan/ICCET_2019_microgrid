@@ -1,35 +1,33 @@
 #include <Wire.h>
 
-uint8_t lamp = 0;
-uint8_t light_1 = 0;
-uint8_t light_2 = 0;
-uint8_t light_3 = 0;
+#define RED_PIN 2
+#define GREEN_PIN 3
+#define BLUE_PIN 5
+
+
+uint8_t bright = 255;
+uint8_t light[3] = {255, 255, 255};
 
 void setup() {
   
-  pinMode(2,OUTPUT); 
-  pinMode(3,OUTPUT); 
-  pinMode(5,OUTPUT); 
-  pinMode(6,OUTPUT); 
+  pinMode(RED_PIN,OUTPUT); 
+  pinMode(GREEN_PIN,OUTPUT); 
+  pinMode(BLUE_PIN,OUTPUT); 
 
   Wire.begin(0x13); 
   Wire.onReceive(receiveEvent);
 }
 
 void loop() {
-  
-  analogWrite(2, 255*lamp);
-  analogWrite(3, light_1);
-  analogWrite(4, light_2);
-  analogWrite(6, light_3);
-  
+  analogWrite(RED_PIN, light[0]);
+  analogWrite(GREEN_PIN, light[1]);
+  analogWrite(BLUE_PIN, light[2]);
 }
 
 void receiveEvent(int bytes) {
   if(bytes>1){
-    lamp = Wire.read();
-    light_1 = Wire.read();
-    light_2 = Wire.read();
-    light_3 = Wire.read();
+    bright = Wire.read();
+    for(int i = 0; i < 3; i++)
+      light[i] = map(Wire.read(), 0, 100, 0, 256) * bright / 100;
   }
 }

@@ -17,6 +17,7 @@ class Vegetables:
 	def choise(self):
 		while(True):
 			print("choise Vegetables")
+			print "Now there is ", var.vegetables_data[5], " C"
 			print("Choise what do you want")
 			print "1 - Change temperature ", var.vegetables_data[0], " C"
 			print "2 - Change brightness ", var.vegetables_data[1], " %"

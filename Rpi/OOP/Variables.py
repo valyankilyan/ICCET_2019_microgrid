@@ -13,7 +13,7 @@ class Variables(object):
 	light_data = [100, 100, 100, 100]#bright, red, green, blue
 
 	ADDR_vegetables = 18
-	vegetables_data = [30, 100, 100, 100, 100]#temperature, bright, red, green, blue
+	vegetables_data = [30, 100, 100, 100, 100, 25]#temperature, bright, red, green, blue, temperature now
 
 	# radio and wheel have not address and set with generators
 	radio_data = [1]#on or off
