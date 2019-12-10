@@ -5,7 +5,8 @@
 #define BLUE_PIN 5
 #define MOUNTAIN_PIN 10
 
-uint8_t bright = 255, mountain_bright = 255;
+double bright = 1; 
+uint8_t mountain_bright = 255;
 uint8_t light[3] = {255, 255, 255};
 
 void setup() {
@@ -28,9 +29,9 @@ void loop() {
 
 void receiveEvent(int bytes) {
   if(bytes>1){
-    bright = Wire.read();
+    bright = (double)Wire.read()/100;
     for(int i = 0; i < 3; i++)
-      light[i] = map(Wire.read(), 0, 100, 0, 256) * bright / 100;
-    mountain_bright = Wire.read();
+      light[i] = map(Wire.read(), 0, 100, 0, 255) * bright;
+    mountain_bright = map(Wire.read(), 0, 100, 0, 255) * bright;
   }
 }

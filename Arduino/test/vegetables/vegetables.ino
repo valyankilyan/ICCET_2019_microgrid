@@ -17,22 +17,33 @@ void setup() {
   pinMode(HOT_PIN,OUTPUT); 
   for(int i = 0; i < 3; i++)
     pinMode(light_pin[i], OUTPUT);
-
-  Wire.begin(0x12); 
-  Wire.onReceive(receiveEvent);
-  Wire.onRequest(requestEvent);
+    
+//  Wire.begin(0x12); 
+//  Wire.onReceive(receiveEvent);
+//  Wire.onRequest(requestEvent);
 }
 
 void loop() {
   thermometer.read();
   sensor = thermometer.getTemperatureC();
   temp = min(max(0, (temperature - sensor)*100), 255);
-  
-  analogWrite(HOT_PIN, temp);
-  
-  for(int i = 0; i < 3; i++)
-    analogWrite(light_pin[i], light[i]);
 
+  Serial.println(sensor);
+
+  analogWrite(HOT_PIN, temp);
+  for(int test = 0; test < 6; test++){  
+    if(test > 3)
+      light[test%3] = 255;
+    else
+      light[test] = 0;
+      
+    for(int i = 0; i < 3; i++)
+      analogWrite(light_pin[i], light[i]);
+    
+    Serial.println(test);
+
+    delay(1000);
+  }
   if(millis() - tim > 1000){
      tim = millis();
      Serial.println("hello");
