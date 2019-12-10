@@ -33,7 +33,7 @@ class Scene():
 		while(True):
 			print("Choise what do you want")
 			print "1 - Change music, now playing", var.music_list[var.scene_data[0] - 1]
-			print "2 - BASSBOOOST, now", ("on" if var.scene_data[1] else "off") 
+			print "2 - BASSBOOOST, now", var.scene_data[1]
 			print("0 - exit")
 			
 			what = input("Enter your choise: ")

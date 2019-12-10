@@ -1,4 +1,5 @@
 from smbus2 import SMBus, i2c_msg
+import time
 import os
 import sys
 from Error import Error
@@ -18,12 +19,15 @@ class Data:
 			
 			except IOError as e:
 				print "I/O error({0}): {1}".format(e.errno, e.strerror)
+				time.sleep(1)
 			
 			except ValueError:
 				print "Could not convert data to an integer."
+				time.sleep(1)
 			
 			except:
 				print "Unexpected error:", sys.exc_info()[0]
+				time.sleep(1)
 				raise
 
 	def read(self):

@@ -31,22 +31,28 @@ class Consumer:
 			print("Choise what do you want")
 			for i in consumers:
 				print i, "-", consumers[i]
-			("0 - exit")
+			print("0 - exit")
 			choise = input("Enter your choise: ")
 			os.system('clear')
 
 			if choise == 0:
 				return
+
 			if choise == 1:
 				scene.choise()
+
 			if choise == 2:
 				light.choise()
+
 			if choise == 3:
 				radio.choise()
+
 			if choise == 4:
 				vegetables.choise()
+
 			if choise == 5:
 				wheel.choise()	
+				
 			if choise > 5 or choise < 0:
 				error.log("consumer")
 			# else:
