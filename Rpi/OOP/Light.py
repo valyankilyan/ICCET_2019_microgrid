@@ -22,6 +22,7 @@ class Light:
 			print "2 - Change red light level ", var.light_data[1], " %"
 			print "3 - Change green light level ", var.light_data[2], " %" 
 			print "4 - Change blue light level ", var.light_data[3], " %" 
+			print "5 - Change mountain light brightness", var.light_data[4], " %"
 			print("0 - exit")
 
 			choise = input("Enter your choise: ")
@@ -30,10 +31,10 @@ class Light:
 			if choise == 0:
 				return
 
-			if choise > 0 and choise < 5:
+			if choise > 0 and choise < 6:
 				var.light_data[choise - 1] = change.level(var.light_data[choise - 1])
 			
-			if choise > 4 and choise < 0:
+			if choise > 5 and choise < 0:
 				error.log("light")
 			
 			else:

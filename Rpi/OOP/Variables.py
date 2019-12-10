@@ -10,7 +10,7 @@ class Variables(object):
 	music_list = ["Shrek theme", "From Vint", "Votting", "Soccer physics", "Dmitry", "John Sina", "SILENCE"]
 
 	ADDR_light = 17
-	light_data = [100, 100, 100, 100]#bright, red, green, blue
+	light_data = [100, 100, 100, 100, 100]#bright, red, green, blue, mountain
 
 	ADDR_vegetables = 18
 	vegetables_data = [30, 100, 100, 100, 100, 25]#temperature, bright, red, green, blue, temperature now

@@ -28,7 +28,7 @@ class Generator:
 			print("Choise what do you want")
 			for i in generators:
 				print i, "-", generators[i]
-			("0 - exit")
+			print("0 - exit")
 			choise = input("Enter your choise: ")
 			os.system('clear')
 
