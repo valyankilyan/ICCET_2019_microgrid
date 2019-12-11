@@ -34,7 +34,7 @@ def read(addr):
 	try:
 		with SMBus(1) as bus:
 			try:
-			    write = i2c_msg.write(addr, [200])
+			    write = i2c_msg.write(addr, [30, 100, 100, 100, 100, 25])
 			    read = i2c_msg.read(addr, 2)				
 			    bus.i2c_rdwr(write, read)
 			    for i in read:
