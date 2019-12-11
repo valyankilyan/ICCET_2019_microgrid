@@ -26,8 +26,10 @@
             <h3 class=" pl-6">Трек:</h3>
             <v-select
             :items="items"
+             v-model="music"
             label="Выберети музыку"
             class="ma-0 pa-0 ml-3 "
+            
             ></v-select>
         </v-col>
 
@@ -37,10 +39,10 @@
             <span class="ma-0 pa-0 ml-2 mt-1">   
              <v-checkbox
              class="ma-0 pa-0 "
-                v-model="ex4"
+                v-model="retry"
                 label=""
                 color="red"
-                value="red"
+                value="true"
                 hide-details
               ></v-checkbox>
             </span>  
@@ -64,7 +66,7 @@
         multiple
       >
         <v-expansion-panel>
-          <v-expansion-panel-header>Ваш тариф</v-expansion-panel-header>
+          <v-expansion-panel-header>Ваш тариф{{retry}}</v-expansion-panel-header>
           <v-expansion-panel-content >
               <section class="d-flex mb-0 pb-0">
               <span>Солненая Панель<br>3₽/кВт</span>
@@ -142,11 +144,13 @@
   export default {
     data () {
       return {
-        but:false,
-        but2:false, 
-        switch1: false,
-        switch2: false,
-        switch3: false,
+        retry:'',           //кнопка повтора трека  врзвращает =>(true)
+        music:'',           //какой трек сейчас играет   (название играющего трека)
+        but:false,          //on/off кнопки включения   (true/false)
+        but2:false,         //on/off кнопки бастбуста   (true/false) 
+        switch1: false,     // значение слайдера on/off (true/false)
+        switch2: false,     //значение слайдера бастбуст   (true/false)
+        switch3: false,     //значение слайдера акум/солнце  (true/false)
         items: ['Джон Сина', 'Шрек musik', 'Димон', 'Атвинта','Физикс'],
         pays: [
           {

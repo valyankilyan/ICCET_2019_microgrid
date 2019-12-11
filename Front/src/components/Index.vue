@@ -15,26 +15,18 @@
         Карельские Энергетики
       </v-card-subtitle>
   
-            <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
+          
         
-              <v-select
-              id="pop"
-               v-model="select"
-            :hint="`${select.state}`"
+              <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
+            <h3 class=" pl-6">Трек:</h3>
+            <v-select
             :items="items"
-            item-text="state"
+             v-model="select"
+            label=" Выберите Пользователя"
+            class="ma-0 pa-0 ml-3 "
             
-            label="Выберете пользователя"
-              class="ma-0 pa-0 ml-6 "
-            
-              clearable
-               persistent-hint
-            return-object
-            single-line
-             
-             
-              ></v-select>
-          </v-col>
+            ></v-select>
+        </v-col>
 
    <section class="d-flex ">
            <v-col cols="12" sm="6" class="ma-0 pa-0 pl-6 d-flex">
@@ -55,7 +47,7 @@
 
     </section>
     <span class="ma-0 pa-0 pl-5  " id="elem">
-    <router-link v-bind:to="select.state" style="text-decoration: none; color: white">
+    <router-link v-bind:to="select" style="text-decoration: none; color: white">
       <v-btn color="cyan lighten-1"  text>войти</v-btn>
     </router-link>
     </span>
@@ -83,18 +75,18 @@
       return {
         
          
-        linkk: '',
+        
         show1: false,
-         select: { state: '' },
+        select: '' , // значение выбраного пользователя
         items: [
-        { state: 'Колесо обозрения'},
-        { state: 'Сцена'},
-        { state: 'Радио' },
-        { state: 'Освещение' },
-        { state: 'Умная грядка' },
-        { state: 'Admin' }
+          'Колесо обозрения',
+          'Сцена',
+          'Радио' ,
+          'Освещение' ,
+          'Умная грядка' ,
+          'Admin' 
         ],
-        password: '',
+        password: '',  //от пароля
         rules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 4 || 'Min 4 characters',
