@@ -157,12 +157,15 @@
   export default {
     data () {
       return {
-        but:false, 
-        but2:false, 
-        switch1: false,
-        switch2: false,
-        switch3: false,
-        items: ['Человечская музыка', 'Шрек musik', 'Jazz', 'Rock'],
+        sliderRed:'',               //уровень красного цвета (возвращает от 0 до 100)  
+        sliderGreen:'',             //уровень зеленого цвета (возвращает от 0 до 100)
+        sliderBlue:'',              //уровень голубого цвета (возвращает от 0 до 100)
+        but:false,                  // on/off кнопки включения   (true/false)
+        but2:false,                 // on/off кнопки ласпа на горе   (true/false) 
+        switch1: false,             // значение слайдера on/off (true/false)
+        switch2: false,             // значение слайдера лампа на горе   (true/false)
+        switch3: false,             //значение слайдера акум/солнце  (true/false)
+       
         pays: [
           {
             name: '1:45:67',

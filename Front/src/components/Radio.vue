@@ -29,7 +29,7 @@
              
                
                 <v-slider
-                v-model="slider"
+                v-model="sliderMax"
                 thumb-label
                 class="ma-0"
                 ></v-slider>
@@ -124,10 +124,11 @@
   export default {
     data () {
       return {
-        but:false, 
-        switch1: false,
-        switch2: false,
-        items: ['Человечская музыка', 'Шрек musik', 'Jazz', 'Rock'],
+        sliderMax:'',          //уровень громкости (возвращает от 0 до 100) 
+        but:false,             // on/off кнопки включения   (true/false)
+        switch1: false,        // значение слайдера on/off (true/false)
+        switch2: false,        //значение слайдера акум/солнце  (true/false)
+    
         pays: [
           {
             name: '1:45:67',

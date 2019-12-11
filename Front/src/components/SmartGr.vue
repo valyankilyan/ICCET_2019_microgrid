@@ -27,7 +27,7 @@
              
                
                 <v-slider
-                v-model="slider"
+                v-model="sliderTemp"
                 thumb-label
                  max="40"
               min="20"
@@ -36,7 +36,7 @@
               
         </v-container>
          <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Текущая температура:<span> 22	&#8451;</span></h3>
+            <h3 class="pl-3">Текущая температура:<span> {{temp}}	&#8451;</span></h3>
              
                
                 
@@ -136,12 +136,14 @@
   export default {
     data () {
       return {
-        but:false, 
-        but2:false,
-        switch1: false,
-        switch2: false,
-        switch3: false,
-        items: ['Человечская музыка', 'Шрек musik', 'Jazz', 'Rock'],
+        sliderTemp:'',        // значение температуры (от 20 до 40)
+        temp:23,              // значение текущей температуры в теплице
+        but:false,            // on/off кнопки включения   (true/false)
+        but2:false,           // on/off кнопки Свет в теплице (true/false) 
+        switch1: false,       // значение слайдера on/off (true/false)
+        switch2: false,       // значение слайдера Свет в теплице   (true/false)
+        switch3: false,       //значение слайдера акум/солнце  (true/false)
+        
         pays: [
           {
             name: '1:45:67',
