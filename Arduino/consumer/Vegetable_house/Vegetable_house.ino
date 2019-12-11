@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <SPI.h>
 #include <TroykaThermometer.h>
 
 // red pin 5, green pin 6, blue pin 9
