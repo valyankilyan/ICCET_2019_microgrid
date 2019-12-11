@@ -19,6 +19,18 @@
             <span  @click="but = !but"><v-switch  v-model="switch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
+        <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Уровень яркости:</h3>
+             
+               
+                <v-slider
+                v-model="sliderAll"
+                thumb-label
+                class="ma-0"
+                 color="pink darken-1"
+                ></v-slider>
+              
+        </v-container>
         
           
 
@@ -157,6 +169,7 @@
   export default {
     data () {
       return {
+        sliderAll:'',               //общий уровень освещения (щт 0 до 100%)
         sliderRed:'',               //уровень красного цвета (возвращает от 0 до 100)  
         sliderGreen:'',             //уровень зеленого цвета (возвращает от 0 до 100)
         sliderBlue:'',              //уровень голубого цвета (возвращает от 0 до 100)

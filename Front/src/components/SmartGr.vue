@@ -15,7 +15,7 @@
    
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Подача тока</h3>
+            <h3 class="pl-3">Подача тока{{retry}}</h3>
             <span  @click="but = !but"><v-switch  v-model="switch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
@@ -43,10 +43,60 @@
               
         </v-container>
         <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Свет в теплице:</h3>
-            <span  @click="but2 = !but2"><v-switch  v-model="switch2" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but2 ? 'on' : 'off'}}</span>
-            
+            <h3 class="pl-3">Уровень яркости:</h3>
+             
+               
+                <v-slider
+                v-model="sliderAll"
+                thumb-label
+                class="ma-0"
+                 color="pink darken-1"
+                ></v-slider>
+              
         </v-container>
+        
+          
+
+        
+
+        <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Уровень красного:</h3>
+             
+               
+                <v-slider
+                v-model="sliderRed"
+                thumb-label
+                class="ma-0"
+                 color="red"
+                ></v-slider>
+              
+        </v-container>
+        <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Уровень зеленого:</h3>
+             
+               
+                <v-slider
+                v-model="sliderGreen"
+                thumb-label
+                
+                class="ma-0"
+                 color="green"
+                ></v-slider>
+              
+        </v-container>
+        <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Уровень голубого:</h3>
+             
+               
+                <v-slider
+                v-model="sliderBlue"
+                thumb-label
+                class="ma-0"
+              
+                ></v-slider>
+              
+        </v-container>
+        
         
     </section>
 
@@ -136,6 +186,10 @@
   export default {
     data () {
       return {
+        sliderAll:'',               //общий уровень освещения (щт 0 до 100%)
+        sliderRed:'',               //уровень красного цвета (возвращает от 0 до 100)  
+        sliderGreen:'',             //уровень зеленого цвета (возвращает от 0 до 100)
+        sliderBlue:'',              //уровень голубого цвета (возвращает от 0 до 100)
         sliderTemp:'',        // значение температуры (от 20 до 40)
         temp:23,              // значение текущей температуры в теплице
         but:false,            // on/off кнопки включения   (true/false)

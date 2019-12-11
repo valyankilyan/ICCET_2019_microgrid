@@ -66,7 +66,7 @@
         multiple
       >
         <v-expansion-panel>
-          <v-expansion-panel-header>Ваш тариф{{retry}}</v-expansion-panel-header>
+          <v-expansion-panel-header>Ваш тариф</v-expansion-panel-header>
           <v-expansion-panel-content >
               <section class="d-flex mb-0 pb-0">
               <span>Солненая Панель<br>3₽/кВт</span>
@@ -151,7 +151,7 @@
         switch1: false,     // значение слайдера on/off (true/false)
         switch2: false,     //значение слайдера бастбуст   (true/false)
         switch3: false,     //значение слайдера акум/солнце  (true/false)
-        items: ['Джон Сина', 'Шрек musik', 'Димон', 'Атвинта','Физикс'],
+        items:["Шрек music", "Атвинта", "Soccer physics", "Димон", "Джон Сина", "SILENCE"],
         pays: [
           {
             name: '1:45:67',
