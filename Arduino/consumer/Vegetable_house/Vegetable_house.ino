@@ -32,7 +32,7 @@ void loop() {
   analogWrite(HOT_PIN, 255);
   
   for(int i = 0; i < 3; i++)
-    analogWrite(light_pin[i], light[i]);
+    analogWrite(light_pin[i], double(light[i] * bright) / 100 * 255);
 
   if(millis() - tim > 1000){
      tim = millis();
@@ -45,9 +45,9 @@ void receiveEvent(int byteCount){
 
   while(Wire.available()) {
     temperature = Wire.read();
-    bright = double(Wire.read()) / 100;
+    bright = double(Wire.read())/100;
     for(int i = 0; i < 3; i++)
-      light[i] = double(Wire.read() * bright) / 100 * 255;
+      light[i] = Wire.read();
     Wire.read();
 
     Serial.println("start reading");

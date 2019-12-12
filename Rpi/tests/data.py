@@ -57,11 +57,10 @@ def read_block(addr):
 	try:
 		with SMBus(1) as bus:
 			try:
-					# Read a block of 16 bytes from address 80, offset 0
-				block = bus.read_i2c_block_data(addr, 0, 6)
-					# Returned value is a list of 16 bytes
-				print(block)
-
+				msg = i2c_msg.read(addr, len(data))
+				read = bus.i2c_rdwr(msg)
+				for i in msg:
+					print int(i)
 			except IOError as e:
 				print "I/O error({0}): {1}".format(e.errno, e.strerror)
 				time.sleep(1)
