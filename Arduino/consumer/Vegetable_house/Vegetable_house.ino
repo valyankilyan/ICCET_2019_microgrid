@@ -20,7 +20,7 @@ void setup() {
     pinMode(light_pin[i], OUTPUT);
 
   Wire.begin(0x12); 
-  Wire.onReceive(receiveData);
+  Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
 }
 
@@ -41,24 +41,7 @@ void loop() {
   delay(50);
 }
 
-void receiveEvent(int bytes) {  
-  if(bytes > 1){
-    temperature = Wire.read();
-    bright = double(Wire.read()) / 100;
-    for(int i = 0; i < 3; i++)
-      light[i] = double(Wire.read() * bright) / 100 * 255;
-
-    Serial.println("start reading");
-    Serial.println(temperature);
-    Serial.println(bright);
-    for(int i = 0; i < 3; i++)
-      Serial.println(light[i]);
-    Serial.println("end reading");
-  }
-}
-
-
-void receiveData(int byteCount){
+void receiveEvent(int byteCount){
 
   while(Wire.available()) {
     temperature = Wire.read();
@@ -73,25 +56,15 @@ void receiveData(int byteCount){
     for(int i = 0; i < 3; i++)
       Serial.println(light[i]);
     Serial.println("end reading");
-    /*number = Wire.read();
-    Serial.print("data received: ");
-    Serial.println(number);
-
-    if (number == 1){
-      if (state == 0){
-        digitalWrite(13, HIGH); // set the LED on
-        state = 1;
-      }
-      else{
-        digitalWrite(13, LOW); // set the LED off
-        state = 0;
-      }
-    }*/
   }
 }
 
 void requestEvent(){
-  Wire.write((uint8_t *)&sensor, sizeof(&sensor));
+  Wire.write(temperature);
+  Wire.write(uint8_t(bright * 100));
+  for(int i = 0; i < 3; i++)
+    Wire.write(light[i]);
+  Wire.write(sensor);
 }
 /*
 #include <Wire.h>
