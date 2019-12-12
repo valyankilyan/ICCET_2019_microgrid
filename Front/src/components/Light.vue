@@ -16,8 +16,21 @@
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока</h3>
-            <span  @click="but = !but"><v-switch  v-model="switch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
+            <span  @click="but = !but"><v-switch  v-model="LIswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
+        </v-container>
+        <v-container fluid class="d-flex mb-0 pb-0">
+            <h3 class="pl-3">Уровень яркости:</h3>
+             
+               
+                <v-slider
+                v-model="LIsliderAll"
+                :thumb-size="27"
+            thumb-label="always"
+                class="ma-0"
+                 color="pink darken-1"
+                ></v-slider>
+              
         </v-container>
         
           
@@ -29,8 +42,9 @@
              
                
                 <v-slider
-                v-model="sliderRed"
-                thumb-label
+                v-model="LIsliderRed"
+                :thumb-size="27"
+            thumb-label="always"
                 class="ma-0"
                  color="red"
                 ></v-slider>
@@ -41,8 +55,9 @@
              
                
                 <v-slider
-                v-model="sliderGreen"
-                thumb-label
+                v-model="LIsliderGreen"
+                :thumb-size="27"
+            thumb-label="always"
                 
                 class="ma-0"
                  color="green"
@@ -54,8 +69,9 @@
              
                
                 <v-slider
-                v-model="sliderBlue"
-                thumb-label
+                v-model="LIsliderBlue"
+                :thumb-size="27"
+            thumb-label="always"
                 class="ma-0"
               
                 ></v-slider>
@@ -65,7 +81,7 @@
         
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Лампа на горе:</h3>
-            <span  @click="but2 = !but2"><v-switch  v-model="switch2" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but2 ? 'on' : 'off'}}</span>
+            <span  @click="but2 = !but2"><v-switch  v-model="LIswitch2" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but2 ? 'on' : 'off'}}</span>
             
         </v-container>
         
@@ -83,7 +99,7 @@
           <v-expansion-panel-content >
               <section class="d-flex mb-0 pb-0">
               <span>Солненая Панель<br>3₽/кВт</span>
-            <v-switch v-model="switch3" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
+            <v-switch v-model="LIswitch3" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
             <span>Аккумулятор<br>5₽/кВт</span>
               </section>
           </v-expansion-panel-content>
@@ -157,14 +173,15 @@
   export default {
     data () {
       return {
-        sliderRed:'',               //уровень красного цвета (возвращает от 0 до 100)  
-        sliderGreen:'',             //уровень зеленого цвета (возвращает от 0 до 100)
-        sliderBlue:'',              //уровень голубого цвета (возвращает от 0 до 100)
+        LIsliderAll:'',               //общий уровень освещения (щт 0 до 100%)
+        LIsliderRed:'',               //уровень красного цвета (возвращает от 0 до 100)  
+        LIsliderGreen:'',             //уровень зеленого цвета (возвращает от 0 до 100)
+        LIsliderBlue:'',              //уровень голубого цвета (возвращает от 0 до 100)
         but:false,                  // on/off кнопки включения   (true/false)
         but2:false,                 // on/off кнопки ласпа на горе   (true/false) 
-        switch1: false,             // значение слайдера on/off (true/false)
-        switch2: false,             // значение слайдера лампа на горе   (true/false)
-        switch3: false,             //значение слайдера акум/солнце  (true/false)
+        LIswitch1: false,             // значение слайдера on/off (true/false)
+        LIswitch2: false,             // значение слайдера лампа на горе   (true/false)
+        LIswitch3: false,             //значение слайдера акум/солнце  (true/false)
        
         pays: [
           {
