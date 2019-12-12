@@ -85,7 +85,8 @@ def read_and_write(addr):
 				 # Read 64 bytes from address 80
 			    msg = i2c_msg.read(addr, len(data))
 			    read = bus.i2c_rdwr(msg)
-			    print(read)
+			    for i in msg:
+			    	print(int(msg[i])
 
 			    # Write some bytes to address 80
 			    msg = i2c_msg.write(addr, data)
