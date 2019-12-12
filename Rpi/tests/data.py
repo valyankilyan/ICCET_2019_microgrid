@@ -83,14 +83,13 @@ def read_and_write(addr):
 		with SMBus(1) as bus:
 			try:
 				 # Read 64 bytes from address 80
-			    msg = i2c_msg.read(addr, len(data))
-			    read = bus.i2c_rdwr(msg)
-			    for i in msg:
-			    	print(int(msg[i])
-
-			    # Write some bytes to address 80
-			    msg = i2c_msg.write(addr, data)
-			    bus.i2c_rdwr(msg)
+				msg = i2c_msg.read(addr, len(data))
+				read = bus.i2c_rdwr(msg)
+				for i in msg:
+					print(int(msg[i]))
+				# Write some bytes to address 80
+				msg = i2c_msg.write(addr, data)
+				bus.i2c_rdwr(msg)
 
 			except IOError as e:
 				print "I/O error({0}): {1}".format(e.errno, e.strerror)
