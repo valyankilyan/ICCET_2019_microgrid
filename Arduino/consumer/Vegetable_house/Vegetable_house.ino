@@ -60,6 +60,7 @@ void receiveEvent(int byteCount){
 }
 
 void requestEvent(){
+  Serial.println("write");
   Wire.write(temperature);
   Wire.write(uint8_t(bright * 100));
   for(int i = 0; i < 3; i++)
