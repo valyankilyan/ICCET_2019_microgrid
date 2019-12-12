@@ -16,7 +16,7 @@
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока{{retry}}</h3>
-            <span  @click="but = !but"><v-switch  v-model="switch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
+            <span  @click="but = !but"><v-switch  v-model="SGswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
         
@@ -27,7 +27,7 @@
              
                
                 <v-slider
-                v-model="sliderTemp"
+                v-model="SGsliderTemp"
                 thumb-label
                  max="40"
               min="20"
@@ -36,7 +36,7 @@
               
         </v-container>
          <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Текущая температура:<span> {{temp}}	&#8451;</span></h3>
+            <h3 class="pl-3">Текущая температура:<span> {{SGtemp}}	&#8451;</span></h3>
              
                
                 
@@ -47,7 +47,7 @@
              
                
                 <v-slider
-                v-model="sliderAll"
+                v-model="SGsliderAll"
                 thumb-label
                 class="ma-0"
                  color="pink darken-1"
@@ -64,7 +64,7 @@
              
                
                 <v-slider
-                v-model="sliderRed"
+                v-model="SGsliderRed"
                 thumb-label
                 class="ma-0"
                  color="red"
@@ -76,7 +76,7 @@
              
                
                 <v-slider
-                v-model="sliderGreen"
+                v-model="SGsliderGreen"
                 thumb-label
                 
                 class="ma-0"
@@ -89,7 +89,7 @@
              
                
                 <v-slider
-                v-model="sliderBlue"
+                v-model="SGsliderBlue"
                 thumb-label
                 class="ma-0"
               
@@ -112,7 +112,7 @@
           <v-expansion-panel-content >
               <section class="d-flex mb-0 pb-0">
               <span>Солненая Панель<br>3₽/кВт</span>
-            <v-switch v-model="switch3" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
+            <v-switch v-model="SGswitch3" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
             <span>Аккумулятор<br>5₽/кВт</span>
               </section>
           </v-expansion-panel-content>
@@ -186,17 +186,17 @@
   export default {
     data () {
       return {
-        sliderAll:'',               //общий уровень освещения (щт 0 до 100%)
-        sliderRed:'',               //уровень красного цвета (возвращает от 0 до 100)  
-        sliderGreen:'',             //уровень зеленого цвета (возвращает от 0 до 100)
-        sliderBlue:'',              //уровень голубого цвета (возвращает от 0 до 100)
-        sliderTemp:'',        // значение температуры (от 20 до 40)
-        temp:23,              // значение текущей температуры в теплице
+        SGsliderAll:'',               //общий уровень освещения (щт 0 до 100%)
+        SGsliderRed:'',               //уровень красного цвета (возвращает от 0 до 100)  
+        SGsliderGreen:'',             //уровень зеленого цвета (возвращает от 0 до 100)
+        SGsliderBlue:'',              //уровень голубого цвета (возвращает от 0 до 100)
+        SGsliderTemp:'',        // значение температуры (от 20 до 40)
+        SGtemp:23,              // значение текущей температуры в теплице
         but:false,            // on/off кнопки включения   (true/false)
         but2:false,           // on/off кнопки Свет в теплице (true/false) 
-        switch1: false,       // значение слайдера on/off (true/false)
-        switch2: false,       // значение слайдера Свет в теплице   (true/false)
-        switch3: false,       //значение слайдера акум/солнце  (true/false)
+        SGswitch1: false,       // значение слайдера on/off (true/false)
+        SGswitch2: false,       // значение слайдера Свет в теплице   (true/false)
+        SGswitch3: false,       //значение слайдера акум/солнце  (true/false)
         
         pays: [
           {

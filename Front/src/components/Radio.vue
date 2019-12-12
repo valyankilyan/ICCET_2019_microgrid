@@ -16,7 +16,7 @@
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока</h3>
-            <span  @click="but = !but"><v-switch  v-model="switch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
+            <span  @click="but = !but"><v-switch  v-model="RAswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
         
@@ -29,8 +29,9 @@
              
                
                 <v-slider
-                v-model="sliderMax"
-                thumb-label
+                v-model="RAsliderMax"
+                :thumb-size="27"
+            thumb-label="always"
                 class="ma-0"
                 ></v-slider>
               
@@ -50,7 +51,7 @@
           <v-expansion-panel-content >
               <section class="d-flex mb-0 pb-0">
               <span>Солненая Панель<br>3₽/кВт</span>
-            <v-switch v-model="switch2" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
+            <v-switch v-model="RAswitch2" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
             <span>Аккумулятор<br>5₽/кВт</span>
               </section>
           </v-expansion-panel-content>
@@ -124,10 +125,10 @@
   export default {
     data () {
       return {
-        sliderMax:'',          //уровень громкости (возвращает от 0 до 100) 
+        RAsliderMax:'',          //уровень громкости (возвращает от 0 до 100) 
         but:false,             // on/off кнопки включения   (true/false)
-        switch1: false,        // значение слайдера on/off (true/false)
-        switch2: false,        //значение слайдера акум/солнце  (true/false)
+        RAswitch1: false,        // значение слайдера on/off (true/false)
+        RAswitch2: false,        //значение слайдера акум/солнце  (true/false)
     
         pays: [
           {

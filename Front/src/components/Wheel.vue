@@ -16,7 +16,7 @@
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока</h3>
-            <span  @click="but = !but"><v-switch  v-model="switch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
+            <span  @click="but = !but"><v-switch  v-model="WHswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
         
@@ -38,7 +38,7 @@
           <v-expansion-panel-content >
               <section class="d-flex mb-0 pb-0">
               <span>Солненая Панель<br>3₽/кВт</span>
-            <v-switch v-model="switch2" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
+            <v-switch v-model="WHswitch2" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
             <span>Аккумулятор<br>5₽/кВт</span>
               </section>
           </v-expansion-panel-content>
@@ -113,8 +113,8 @@
     data () {
       return {
         but:false,            // on/off кнопки включения   (true/false)
-        switch1: false,       // значение слайдера on/off (true/false)
-        switch2: false,       //значение слайдера акум/солнце  (true/false)
+        WHswitch1: false,       // значение слайдера on/off (true/false)
+        WHswitch2: false,       //значение слайдера акум/солнце  (true/false)
        
        
         pays: [

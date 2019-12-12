@@ -16,7 +16,7 @@
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока:</h3>
-            <span  @click="but = !but"><v-switch  v-model="switch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
+            <span  @click="but = !but"><v-switch  v-model="SCswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
         
@@ -25,8 +25,8 @@
         <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
             <h3 class=" pl-6">Трек:</h3>
             <v-select
-            :items="items"
-             v-model="music"
+            :items="SCitems"
+             v-model="SCmusic"
             label="Выберети музыку"
             class="ma-0 pa-0 ml-3 "
             
@@ -39,7 +39,7 @@
             <span class="ma-0 pa-0 ml-2 mt-1">   
              <v-checkbox
              class="ma-0 pa-0 "
-                v-model="retry"
+                v-model="SCretry"
                 label=""
                 color="red"
                 value="true"
@@ -51,7 +51,7 @@
          <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Bassboosted:</h3>
              
-                        <span  @click="but2 = !but2"><v-switch  v-model="switch2" :label="``" class="ma-0 ml-3 pa-0" >
+                        <span  @click="but2 = !but2"><v-switch  v-model="SCswitch2" :label="``" class="ma-0 ml-3 pa-0" >
                           </v-switch></span><span>{{but2 ? 'on' : 'off'}}</span>
 
         </v-container>
@@ -70,7 +70,7 @@
           <v-expansion-panel-content >
               <section class="d-flex mb-0 pb-0">
               <span>Солненая Панель<br>3₽/кВт</span>
-            <v-switch v-model="switch3" :label="``" class="d-flex ma-0 ml-3 pa-0"  color="red"></v-switch>
+            <v-switch v-model="SCswitch3" :label="``" class="d-flex ma-0 ml-3 pa-0"  color="red"></v-switch>
             <span>Аккумулятор<br>5₽/кВт</span>
               </section>
           </v-expansion-panel-content>
@@ -144,14 +144,14 @@
   export default {
     data () {
       return {
-        retry:'',           //кнопка повтора трека  врзвращает =>(true)
-        music:'',           //какой трек сейчас играет   (название играющего трека)
+        SCretry:'',           //кнопка повтора трека  врзвращает =>(true)
+        SCmusic:'',           //какой трек сейчас играет   (название играющего трека)
         but:false,          //on/off кнопки включения   (true/false)
         but2:false,         //on/off кнопки бастбуста   (true/false) 
-        switch1: false,     // значение слайдера on/off (true/false)
-        switch2: false,     //значение слайдера бастбуст   (true/false)
-        switch3: false,     //значение слайдера акум/солнце  (true/false)
-        items:["Шрек music", "Атвинта", "Soccer physics", "Димон", "Джон Сина", "SILENCE"],
+        SCswitch1: false,     // значение слайдера on/off (true/false)
+        SCswitch2: false,     //значение слайдера бастбуст   (true/false)
+        SCswitch3: false,     //значение слайдера акум/солнце  (true/false)
+        SCitems:["Шрек music", "Атвинта", "Soccer physics", "Димон", "Джон Сина", "SILENCE"],
         pays: [
           {
             name: '1:45:67',
