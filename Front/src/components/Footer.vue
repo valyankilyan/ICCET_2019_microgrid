@@ -89,7 +89,9 @@
 
 <script>
     export default {
-        data: () => ({}),
+        data: () => ({
+            links:''
+        }),
     }
 </script>
 

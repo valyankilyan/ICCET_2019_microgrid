@@ -15,7 +15,7 @@
    
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
-            <h3 class="pl-3">Подача тока{{retry}}</h3>
+            <h3 class="pl-3">Подача тока</h3>
             <span  @click="but = !but"><v-switch  v-model="SGswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
@@ -183,6 +183,7 @@
 
 
 <script>
+//import axios from "axios";
   export default {
     data () {
       return {
@@ -213,6 +214,9 @@
           },
         ],
       }
-    },
+    
+ 
+
+    }
   }
 </script>
