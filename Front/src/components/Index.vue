@@ -65,19 +65,30 @@
 
 
 <script>
+        
+  
+      
+
   export default {
     data () {
-  
-     
+   var linkk;
+      var select;
+          function myfun (){
+          if (select == 'Сцена'){
+            linkk='scene';
+            return linkk;
+          }
+        }
 
 
   
       return {
         
-         
-        
+        myfun,
+       
+       // linkk:'radio',
         show1: false,
-        select: '' , // значение выбраного пользователя
+        //select: '' , // значение выбраного пользователя
         items: [
           'Колесо обозрения',
           'Сцена',
@@ -86,17 +97,23 @@
           'Умная грядка' ,
           'Admin' 
         ],
+        
         password: '',  //от пароля
         rules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 4 || 'Min 4 characters',
           emailMatch: () => ('The email and password you entered don\'t match'),
         },
+           
      
-  
       }
+      
+     
+      
+     
     },
   }
+  
 </script>
 
 
