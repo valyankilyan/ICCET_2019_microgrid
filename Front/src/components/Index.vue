@@ -18,7 +18,7 @@
           
         
               <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
-            <h3 class=" pl-6">Трек:</h3>
+            <h3 class=" pl-6" @click="xxx" >Трек:</h3>
             <v-select
             :items="items"
              v-model="select"
@@ -47,10 +47,11 @@
 
     </section>
     <span class="ma-0 pa-0 pl-5  " id="elem">
-    <router-link v-bind:to="select" style="text-decoration: none; color: white">
+    <router-link v-bind:to="linkk" style="text-decoration: none; color: white">
       <v-btn color="cyan lighten-1"  text>войти</v-btn>
     </router-link>
     </span>
+    <div v-for="itm in detail" :key="itm.name"><p>{{itm.image}}</p></div>
 
   </v-card>
 </template>
@@ -64,19 +65,17 @@
 
 
 
+
 <script>
-  export default {
-    data () {
-  
-     
+ import axios from 'axios';
 
-
+export default {
   
-      return {
-        
-         
-        
+  data () {
+    return {
+       
         show1: false,
+        linkk:'',
         select: '' , // значение выбраного пользователя
         items: [
           'Колесо обозрения',
@@ -92,11 +91,30 @@
           min: v => v.length >= 4 || 'Min 4 characters',
           emailMatch: () => ('The email and password you entered don\'t match'),
         },
-     
-  
-      }
+        detail:[]
+    }
+  },
+    created() {
+      axios.get(`https://my-json-server.typicode.com/AlexanderPanshin/dpv.school/user`)
+      .then(response=> {
+        this.detail= response.data;
+      })
+      .catch(error=> {
+        window.console.log(error);
+        this.errored=true;
+                })
     },
+  
+  /*methods: {
+    
+     xxx: function  (select){
+    if(select=='Сцена')
+    linkk='scene';
   }
+     
+    }*/
+  }
+
 </script>
 
 
