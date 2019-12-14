@@ -16,7 +16,7 @@
     <section>
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока:</h3>
-            <span  @click="but = !but"><v-switch  v-model="SCswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
+            <span @click="but = !but"><v-switch  v-model="SCswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
             
         </v-container>
         
@@ -25,6 +25,7 @@
         <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
             <h3 class=" pl-6">Трек:</h3>
             <v-select
+            :disabled = !but
             item-value="valueS"
             item-text="name"
             :items="SCitems"
@@ -41,6 +42,7 @@
             <span class="ma-0 pa-0 ml-2 mt-1">   
              <v-checkbox
              class="ma-0 pa-0 "
+             :disabled = !but
                 v-model="SCretry"
                 label=""
                 color="red"
@@ -53,7 +55,7 @@
          <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Bassboosted:</h3>
              
-                        <span  @click="but2 = !but2"><v-switch  v-model="SCswitch2" :label="``" class="ma-0 ml-3 pa-0" >
+                        <span  @click="but2 = !but2"><v-switch  :disabled = !but v-model="SCswitch2" :label="``" class="ma-0 ml-3 pa-0" >
                           </v-switch></span><span>{{but2 ? 'on' : 'off'}}</span>
 
         </v-container>
