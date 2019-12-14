@@ -1,5 +1,5 @@
-import threading
-from Server_files.SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+import threading 
+from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 import random, time
 
 
