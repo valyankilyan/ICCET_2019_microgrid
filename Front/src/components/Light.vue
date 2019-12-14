@@ -90,8 +90,7 @@
 
         <section>
               <v-expansion-panels
-        v-model="panel"
-        :disabled="disabled"
+      
         multiple
       >
         <v-expansion-panel>
@@ -189,11 +188,11 @@
             calories: 157,
           },
           {
-            name: '1:45:67',
+            name: '1:48:67',
             calories: 237,
           },
           {
-            name: '1:45:67',
+            name: '1:55:67',
             calories: 518,
           },
         ],

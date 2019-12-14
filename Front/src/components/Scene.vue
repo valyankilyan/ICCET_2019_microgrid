@@ -25,6 +25,8 @@
         <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
             <h3 class=" pl-6">Трек:</h3>
             <v-select
+            item-value="valueS"
+            item-text="name"
             :items="SCitems"
              v-model="SCmusic"
             label="Выберети музыку"
@@ -61,8 +63,8 @@
 
         <section>
               <v-expansion-panels
-        v-model="panel"
-        :disabled="disabled"
+       
+     
         multiple
       >
         <v-expansion-panel>
@@ -145,24 +147,33 @@
     data () {
       return {
         SCretry:'',           //кнопка повтора трека  врзвращает =>(true)
-        SCmusic:'',           //какой трек сейчас играет   (название играющего трека)
+        SCmusic:'',           //какой трек сейчас играет   (цифра от 1 до 6)
         but:false,          //on/off кнопки включения   (true/false)
         but2:false,         //on/off кнопки бастбуста   (true/false) 
         SCswitch1: false,     // значение слайдера on/off (true/false)
         SCswitch2: false,     //значение слайдера бастбуст   (true/false)
         SCswitch3: false,     //значение слайдера акум/солнце  (true/false)
-        SCitems:["Шрек music", "Атвинта", "Soccer physics", "Димон", "Джон Сина", "SILENCE"],
+         SCitems: 
+      [
+        { name: 'Шрек music', valueS: 1 },
+        { name: 'Атвинта', valueS: 2 },
+        { name: 'Soccer physics', valueS: 3 },
+        { name: 'Димон', valueS: 4 },
+        { name: 'Джон Сина', valueS: 5 },
+        { name: 'SILENCE', valueS: 6 }
+      ],
+
         pays: [
           {
             name: '1:45:67',
             calories: 157,
           },
           {
-            name: '1:45:67',
+            name: '1:46:67',
             calories: 237,
           },
           {
-            name: '1:45:67',
+            name: '1:47:67',
             calories: 518,
           },
         ],
