@@ -19,7 +19,7 @@
       <v-container fluid class="d-flex mb-0 pb-0">
         <h3 class="pl-3">Громкость:</h3>
 
-        <v-slider v-model="RAsliderMax" :thumb-size="27" thumb-label="always" class="ma-0"></v-slider>
+        <v-slider :disabled="!but" v-model="RAsliderMax" :thumb-size="27" thumb-label="always" class="ma-0"></v-slider>
       </v-container>
     </section>
 

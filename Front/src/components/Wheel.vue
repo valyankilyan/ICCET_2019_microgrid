@@ -130,7 +130,39 @@
             calories: 518,
           },
         ],
-      }
+      };
     },
-  }
+    created() {
+        this.$socket.addMessageHandler(this.messageHandle);
+      //  this.$socket.send('scene');
+      
+      },
+      destroyed() {
+        this.$socket.removeMessageHandler(this.messageHandle);
+      },
+      watch: {
+        WHswitch: function() {
+          this.sendData();
+        },
+         WHswitch2: function() {
+          this.sendData();
+        }
+      },
+      methods: {
+        messageHandle(message) {
+          console.log("обработано в Scene " + message);
+        },
+        sendData() {
+          console.log(this.SCmusic);
+
+          let payload = {
+             WHswitch1: this.WHswitch1,       // значение слайдера on/off (true/false)
+              WHswitch2:  this.WHswitch2      //значение слайдера акум/солнце  (true/false)
+            };
+
+          this.$socket.send(JSON.stringify(payload));
+        }
+      }
+
+  };
 </script>

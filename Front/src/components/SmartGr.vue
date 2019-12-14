@@ -27,6 +27,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="SGsliderTemp"
                 thumb-label
                  max="40"
@@ -47,6 +48,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="SGsliderAll"
                 thumb-label
                 class="ma-0"
@@ -64,6 +66,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="SGsliderRed"
                 thumb-label
                 class="ma-0"
@@ -76,6 +79,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="SGsliderGreen"
                 thumb-label
                 
@@ -89,6 +93,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="SGsliderBlue"
                 thumb-label
                 class="ma-0"
@@ -156,29 +161,9 @@
                     
         </section>        
 
-                
-
-     
-
-   
-
-
-
-    
-    
-
-
-
-
+      
   </v-card>
 </template>
-
-
-
-
-
-
-
 
 
 <script>
@@ -212,10 +197,64 @@
             calories: 518,
           },
         ],
-      }
-    
- 
+      };
+    },
+    created() {
+    this.$socket.addMessageHandler(this.messageHandle);
+    this.$socket.send('scene');
+  
+  //this.$socket.send('Встречаются два новых русских, один у другого интересуется: - Слышь, Вован, а вот ты стометровку за сколько пробежишь? - Ну дык, Колян, за штуку баксов, ...');
+  },
+  destroyed() {
+    this.$socket.removeMessageHandler(this.messageHandle);
+  },
+  watch: {
+    SGsliderAll: function() {
+      this.sendData();
+    },
+    SGsliderRed: function() {
+      this.sendData();
+    },
+    SGsliderGreen: function() {
+      this.sendData();
+    },
+    SGsliderBlue: function() {
+      this.sendData();
+    },
+    SGsliderTemp: function() {
+      this.sendData();
+    },
+    SGswitch1: function() {
+      this.sendData();
+    },
+     SGswitch2: function() {
+      this.sendData();
+    },
+     SGswitch3: function() {
+      this.sendData();
+    }
+  },
+  methods: {
+    messageHandle(message) {
+      console.log("обработано в Scene " + message);
+    },
+    sendData() {
+      console.log(this.SCmusic);
 
+      let payload = {
+        SGsliderAll: this.SGsliderAll,               //общий уровень освещения (щт 0 до 100%)
+        SGsliderRed: this.SGsliderRed,               //уровень красного цвета (возвращает от 0 до 100)  
+        SGsliderGreen: this.SGsliderGreen,             //уровень зеленого цвета (возвращает от 0 до 100)
+        SGsliderBlue: this.SGsliderBlue,              //уровень голубого цвета (возвращает от 0 до 100)
+        SGsliderTemp: this.SGsliderTemp,        // значение температуры (от 20 до 40)
+        SGswitch1: this.SGswitch1,       // значение слайдера on/off (true/false)
+        SGswitch2: this.SGswitch2,       // значение слайдера Свет в теплице   (true/false)
+        SGswitch3: this.SGswitch3,   
+       
+      };
+
+      this.$socket.send(JSON.stringify(payload));
     }
   }
+  };
 </script>

@@ -7,7 +7,7 @@ import Socket from "./plugins/socket";
 
 Vue.config.productionTip = false
 
-Vue.use(Socket, { url:'ws://7709f4e2.ngrok.io/' });
+Vue.use(Socket, { url:'ws://7709f4e2.ngrok.io' });
 
 new Vue({
   vuetify,

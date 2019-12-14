@@ -24,6 +24,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="LIsliderAll"
                 :thumb-size="27"
             thumb-label="always"
@@ -42,6 +43,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="LIsliderRed"
                 :thumb-size="27"
             thumb-label="always"
@@ -55,6 +57,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="LIsliderGreen"
                 :thumb-size="27"
             thumb-label="always"
@@ -69,6 +72,7 @@
              
                
                 <v-slider
+                :disabled="!but"
                 v-model="LIsliderBlue"
                 :thumb-size="27"
             thumb-label="always"
@@ -81,7 +85,7 @@
         
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Лампа на горе:</h3>
-            <span  @click="but2 = !but2"><v-switch  v-model="LIswitch2" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but2 ? 'on' : 'off'}}</span>
+            <span  @click="but2 = !but2"><v-switch :disabled="!but" v-model="LIswitch2" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but2 ? 'on' : 'off'}}</span>
             
         </v-container>
         

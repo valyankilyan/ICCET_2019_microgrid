@@ -39,7 +39,7 @@
             v-model="SCretry"
             label
             color="red"
-            value="true"
+            value=true
             hide-details
           ></v-checkbox>
         </span>
@@ -119,7 +119,7 @@
 export default {
   data() {
     return {
-      SCretry: "", //кнопка повтора трека  врзвращает =>(true)
+      SCretry: false, //кнопка повтора трека  врзвращает =>(true)
       SCmusic: null, //какой трек сейчас играет   (цифра от 1 до 6)
       but: false, //on/off кнопки включения   (true/false)
       but2: false, //on/off кнопки бастбуста   (true/false)
@@ -165,6 +165,15 @@ export default {
     },
     SCmusic: function() {
       this.sendData();
+    },
+    SCswitch1: function() {
+      this.sendData();
+    },
+    SCswitch2: function() {
+      this.sendData();
+    },
+    SCswitch3: function() {
+      this.sendData();
     }
   },
   methods: {
@@ -177,8 +186,6 @@ export default {
       let payload = {
         SCretry: this.SCretry, //кнопка повтора трека  врзвращает =>(true)
         SCmusic: this.SCmusic, //какой трек сейчас играет   (цифра от 1 до 6)
-        but: this.but, //on/off кнопки включения   (true/false)
-        but2: this.but2, //on/off кнопки бастбуста   (true/false)
         SCswitch1: this.SCswitch1, // значение слайдера on/off (true/false)
         SCswitch2: this.SCswitch2, //значение слайдера бастбуст   (true/false)
         SCswitch3: this.SCswitch3 //значение слайдера акум/солнце  (true/false)
