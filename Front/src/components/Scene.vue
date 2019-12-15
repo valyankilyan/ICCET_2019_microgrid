@@ -10,21 +10,21 @@
     <section>
       <v-container fluid class="d-flex mb-0 pb-0">
         <h3 class="pl-3">Подача тока:</h3>
-        <span @click="but = !but">
-          <v-switch v-model="SCswitch1" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
+        <span>
+          <v-switch v-model="currentSupply" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
         </span>
-        <span>{{but ? 'on' : 'off'}}</span>
-          <span class="pl-4">Мощность{{}} Вт</span>
+        <span>{{currentSupply ? 'on' : 'off'}}</span>
+        <span class="pl-4">Мощность {{power}} Вт</span>
       </v-container>
 
       <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
         <h3 class="pl-6">Трек:</h3>
         <v-select
-          :disabled="!but"
+          :disabled="!currentSupply"
           item-value="valueS"
           item-text="name"
           :items="SCitems"
-          v-model="SCmusic"
+          v-model="track"
           label="Выберите музыку"
           class="ma-0 pa-0 ml-3"
         ></v-select>
@@ -36,11 +36,11 @@
         <span class="ma-0 pa-0 ml-2 mt-1">
           <v-checkbox
             class="ma-0 pa-0"
-            :disabled="!but"
-            v-model="SCretry"
+            :disabled="!currentSupply"
+            v-model="retryTrack"
             label
             color="red"
-            value=true
+            value="true"
             hide-details
           ></v-checkbox>
         </span>
@@ -49,10 +49,15 @@
       <v-container fluid class="d-flex mb-0 pb-0">
         <h3 class="pl-3">Bassboosted:</h3>
 
-        <span @click="but2 = !but2">
-          <v-switch :disabled="!but" v-model="SCswitch2" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
+        <span>
+          <v-switch
+            :disabled="!currentSupply"
+            v-model="bassboosted"
+            :label="``"
+            class="ma-0 ml-3 pa-0"
+          ></v-switch>
         </span>
-        <span>{{but2 ? 'on' : 'off'}}</span>
+        <span>{{bassboosted ? 'on' : 'off'}}</span>
       </v-container>
     </section>
 
@@ -66,7 +71,7 @@
                 Солненая Панель
                 <br />3₽/кВт
               </span>
-              <v-switch v-model="SCswitch3" :label="``" class="d-flex ma-0 ml-3 pa-0" color="red"></v-switch>
+              <v-switch v-model="tariff" :label="``" class="d-flex ma-0 ml-3 pa-0" color="red"></v-switch>
               <span>
                 Аккумулятор
                 <br />5₽/кВт
@@ -120,13 +125,12 @@
 export default {
   data() {
     return {
-      SCretry: false, //кнопка повтора трека  врзвращает =>(true)
-      SCmusic: null, //какой трек сейчас играет   (цифра от 1 до 6)
-      but: false, //on/off кнопки включения   (true/false)
-      but2: false, //on/off кнопки бастбуста   (true/false)
-      SCswitch1: false, // значение слайдера on/off (true/false)
-      SCswitch2: false, //значение слайдера бастбуст   (true/false)
-      SCswitch3: false, //значение слайдера акум/солнце  (true/false)
+      power: 0,
+      retryTrack: false, //кнопка повтора трека  врзвращает =>(true)
+      track: 1, //какой трек сейчас играет   (цифра от 1 до 6)
+      currentSupply: false, //on/off кнопки включения   (true/false)
+      bassboosted: false, //значение слайдера бастбуст   (true/false)
+      tariff: false, //значение слайдера акум/солнце  (true/false)
       SCitems: [
         { name: "Шрек music", valueS: 1 },
         { name: "Атвинта", valueS: 2 },
@@ -153,27 +157,33 @@ export default {
   },
   created() {
     this.$socket.addMessageHandler(this.messageHandle);
-    this.$socket.send('scene');
-  
-  //this.$socket.send('Встречаются два новых русских, один у другого интересуется: - Слышь, Вован, а вот ты стометровку за сколько пробежишь? - Ну дык, Колян, за штуку баксов, ...');
+
+    const scene = this.$store.getters.SCENE;
+    if (scene) {
+      this.currentSupply = scene.currentSupply;
+      this.tariff = scene.tariff;
+      this.retryTrack = scene.retryTrack;
+      this.bassboosted = scene.bassboosted;
+      this.tariff = scene.tariff;
+    }
   },
   destroyed() {
     this.$socket.removeMessageHandler(this.messageHandle);
   },
   watch: {
-    SCretry: function() {
+    retryTrack: function() {
       this.sendData();
     },
-    SCmusic: function() {
+    track: function() {
       this.sendData();
     },
-    SCswitch1: function() {
+    currentSupply: function() {
       this.sendData();
     },
-    SCswitch2: function() {
+    bassboosted: function() {
       this.sendData();
     },
-    SCswitch3: function() {
+    tariff: function() {
       this.sendData();
     }
   },
@@ -182,17 +192,19 @@ export default {
       console.log("обработано в Scene " + message);
     },
     sendData() {
-      console.log(this.SCmusic);
+      console.log(this.track);
 
       let payload = {
-        SCretry: this.SCretry, //кнопка повтора трека  врзвращает =>(true)
-        SCmusic: this.SCmusic, //какой трек сейчас играет   (цифра от 1 до 6)
-        SCswitch1: this.SCswitch1, // значение слайдера on/off (true/false)
-        SCswitch2: this.SCswitch2, //значение слайдера бастбуст   (true/false)
-        SCswitch3: this.SCswitch3 //значение слайдера акум/солнце  (true/false)
+        type: "Scene",
+        retryTrack: this.retryTrack, //кнопка повтора трека  врзвращает =>(true)
+        track: this.track, //какой трек сейчас играет   (цифра от 1 до 6)
+        currentSupply: this.currentSupply, // значение слайдера on/off (true/false)
+        bassboosted: this.bassboosted, //значение слайдера бастбуст   (true/false)
+        tariff: this.tariff //значение слайдера акум/солнце  (true/false)
       };
 
       this.$socket.send(JSON.stringify(payload));
+      this.$store.commit("SET_SCENE", payload);
     }
   }
 };

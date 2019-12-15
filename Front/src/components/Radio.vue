@@ -10,17 +10,23 @@
     <section>
       <v-container fluid class="d-flex mb-0 pb-0">
         <h3 class="pl-3">Подача тока</h3>
-        <span @click="but = !but">
-          <v-switch v-model="RAswitch1" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
+        <span>
+          <v-switch v-model="currentSupply" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
         </span>
-        <span>{{but ? 'on' : 'off'}}</span>
-          <span class="pl-4">Мощность{{}} Вт</span>
+        <span>{{currentSupply ? 'on' : 'off'}}</span>
+        <span class="pl-4">Мощность{{power}} Вт</span>
       </v-container>
 
       <v-container fluid class="d-flex mb-0 pb-0">
         <h3 class="pl-3">Громкость:</h3>
 
-        <v-slider :disabled="!but" v-model="RAsliderMax" :thumb-size="27" thumb-label="always" class="ma-0"></v-slider>
+        <v-slider
+          :disabled="!currentSupply"
+          v-model="volume"
+          :thumb-size="27"
+          thumb-label="always"
+          class="ma-0"
+        ></v-slider>
       </v-container>
     </section>
 
@@ -34,7 +40,7 @@
                 Солненая Панель
                 <br />3₽/кВт
               </span>
-              <v-switch v-model="RAswitch2" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
+              <v-switch v-model="tariff" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
               <span>
                 Аккумулятор
                 <br />5₽/кВт
@@ -51,9 +57,9 @@
                 <strong>Вы работаете:</strong> 15:23:43 сек
               </p>
               <span>
-                <strong>Суммак к оплате:</strong> 4565₽
+                <strong>Сумма к оплате:</strong> 4565₽
               </span>
-              <v-btn color="cyan lighten-1 pl-5" text>оплатить</v-btn>
+              <v-btn color="cyan lighten-1 pl-5" text>Оплатить</v-btn>
             </section>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -88,10 +94,10 @@
 export default {
   data() {
     return {
-      RAsliderMax: 0, //уровень громкости (возвращает от 0 до 100)
-      but: false, // on/off кнопки включения   (true/false)
-      RAswitch1: false, // значение слайдера on/off (true/false)
-      RAswitch2: false, //значение слайдера акум/солнце  (true/false)
+      power: 0,
+      volume: 0, //уровень громкости (возвращает от 0 до 100)
+      currentSupply: false, // значение слайдера on/off (true/false)
+      tariff: false, //значение слайдера акум/солнце  (true/false)
       pays: [
         {
           name: "1:45:67",
@@ -110,21 +116,20 @@ export default {
   },
   created() {
     this.$socket.addMessageHandler(this.messageHandle);
-    
-  
-  //this.$socket.send('Встречаются два новых русских, один у другого интересуется: - Слышь, Вован, а вот ты стометровку за сколько пробежишь? - Ну дык, Колян, за штуку баксов, ...');
+
+    //this.$socket.send('Встречаются два новых русских, один у другого интересуется: - Слышь, Вован, а вот ты стометровку за сколько пробежишь? - Ну дык, Колян, за штуку баксов, ...');
   },
   destroyed() {
     this.$socket.removeMessageHandler(this.messageHandle);
   },
   watch: {
-    RAsliderMax: function() {
+    volume: function() {
       this.sendData();
     },
-    RAswitch1: function() {
+    currentSupply: function() {
       this.sendData();
     },
-    RAswitch2: function() {
+    tariff: function() {
       this.sendData();
     }
   },
@@ -136,9 +141,10 @@ export default {
       console.log(this.SCmusic);
 
       let payload = {
-        RAsliderMax: this.RAsliderMax,  //кнопка повтора трека  врзвращает =>(true)
-        RAswitch1: this.RAswitch1,  // значение слайдера on/off (true/false)
-        RAswitch2: this.RAswitch2  //значение слайдера акум/солнце  (true/false)
+        type: 'Radio',
+        volume: this.volume, //кнопка повтора трека  врзвращает =>(true)
+        currentSupply: this.currentSupply, // значение слайдера on/off (true/false)
+        tariff: this.tariff //значение слайдера акум/солнце  (true/false)
       };
 
       this.$socket.send(JSON.stringify(payload));
