@@ -1,24 +1,21 @@
-#include <SD.h>                      // need to include the SD library
-//#define SD_ChipSelectPin 53  //example uses hardware SS pin 53 on Mega2560
-#define SD_ChipSelectPin 10  //using digital pin 4 on arduino nano 328, can use other pins
-#include <TMRpcm.h>           //  also need to include this library...
+#include <SD.h>              
+#define SD_ChipSelectPin 10  
+#include <TMRpcm.h>          
 #include <SPI.h>
 #include <Wire.h>
 
-#define SOUND_SIZE 7
+#define SOUND_SIZE 6
  
-TMRpcm tmrpcm;   // create an object for use in this sketch
+TMRpcm tmrpcm;
  
 bool work = 1, replay = 0;
-int sound_id = 1, old_sound_id = 0;
-int boost = 0, old_boost = 0;
+int sound_id = 1, old_sound_id = 0, boost = 0, old_boost = 0;
 long long int last_music_time = 0; 
 
 char* music_list[SOUND_SIZE] = {
   "SILENSE",
   "Shrek.wav",
   "otvinta.wav",
-  "golosovanie.wav",
   "Soccer.wav",
   "dimooon.wav",
   "John.wav"
@@ -28,7 +25,6 @@ long long int music_len[SOUND_SIZE] = {
   99999999,//silence
   132500,//"Shrek theme", 
   204000,//"From Vint", 
-  240000,//"Votting", 
   310000,//"Soccer.wav", 
   66000,//"Dmitry"
   21000//"John.wav"
@@ -37,9 +33,12 @@ long long int music_len[SOUND_SIZE] = {
 void setup(){
   Wire.begin(0x10);
   Wire.onReceive(receiveEvent);
+  
   Serial.begin(9600);
-  tmrpcm.speakerPin = 9; //5,6,11 or 46 on Mega, 9 on Uno, Nano, etc
+  
+  tmrpcm.speakerPin = 9;
   SD.begin(SD_ChipSelectPin);
+  
   Serial.println("Start");
 }
  
@@ -54,7 +53,7 @@ void loop(){
     if(replay)
       old_sound_id--;
     else
-      sound_id = (sound_id+1)%(SOUND_SIZE - 1) + 1;
+      sound_id = (sound_id)%(SOUND_SIZE - 1) + 1;
     //sound_id = (sound_id % (SOUND_SIZE - 1)) + 1;
   }
   
@@ -74,8 +73,10 @@ void loop(){
 void receiveEvent(int bytes) {
   if(bytes > 1){
     sound_id = Wire.read() % SOUND_SIZE;
-    boost = Wire.read() % 5;
-    replay = Wire.read();
+    if(bytes > 1)
+      boost = Wire.read() % 5;
+    if(bytes > 1)
+      replay = Wire.read();
     Serial.print("sound_id = ");
     Serial.println((int)sound_id);
     Serial.print("boost = ");

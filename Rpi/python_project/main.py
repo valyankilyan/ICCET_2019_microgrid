@@ -23,7 +23,7 @@ class Server(WebSocket):
             self.sendMessage("you sent not JSON")
 
         # try:
-            consumer.new_data(dic)
+        consumer.new_data(dic)
         # except: 
         #     error.log("consumer doesn't work")
     
