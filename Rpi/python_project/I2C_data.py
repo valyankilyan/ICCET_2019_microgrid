@@ -12,11 +12,13 @@ class Data:
 		print("init data")
 
 	def write(self, addr, data):
+		print "write i2c data"
 		try:
 			with SMBus(1) as bus:
 				try:
 					msg = i2c_msg.write(addr, data)
 					bus.i2c_rdwr(msg)	
+					print "send data to " + addr + " " + data 
 				
 				except IOError as e:
 					print "I/O error({0}): {1}".format(e.errno, e.strerror)

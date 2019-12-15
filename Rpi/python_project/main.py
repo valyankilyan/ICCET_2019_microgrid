@@ -1,12 +1,43 @@
-import random, time, threading, os
+import random, time, threading, json
 
-from smbus2 import SMBus, i2c_msg
 from Error import Error
-from Variables import Variables
+from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+from Consumer import Consumer
 
+consumer = Consumer()
 error = Error()
-var = Variables()
 
-while(True):
-	print "it's working"
-	time.sleep(10)
+address = 8000
+
+class Server(WebSocket):
+
+    def handleMessage(self):
+        
+        self.sendMessage(self.data)
+        print(self.data)
+        try:
+            dic = json.loads(self.data)
+            print dic
+        except:
+            error.log("data sent isn't JSON")
+            self.sendMessage("you sent not JSON")
+
+        # try:
+            consumer.new_data(dic)
+        # except: 
+        #     error.log("consumer doesn't work")
+    
+
+    def handleConnected(self):
+        print(self.address, 'connected')
+        
+    def handleClose(self):
+        print(self.address, 'closed')
+
+    def send(self, string):
+        self.sendMessage(string)
+
+
+print "starting server"
+serv = SimpleWebSocketServer('', address, Server)
+serv.serveforever()
