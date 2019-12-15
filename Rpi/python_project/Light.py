@@ -14,7 +14,7 @@ class Light:
 		print "Light new data"
 		
 		try:
-			var.light_data[0] = dic["current Suply"]
+			var.light_data[0] = dic["currentSupply"]
 			var.light_data[1] = dic["house1"]
 			var.light_data[2] = dic["house2"]
 			var.light_data[3] = dic["house3"]
