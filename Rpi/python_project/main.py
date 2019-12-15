@@ -18,7 +18,7 @@ class Server(WebSocket):
         try:
             dic = json.loads(self.data)
             print dic
-            # consumer.new_data(dic)
+            consumer.new_data(dic)
         except:
             error.log("data sent isn't JSON")
             self.sendMessage("you sent not JSON")

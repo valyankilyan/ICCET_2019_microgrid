@@ -6,18 +6,20 @@ error = Error()
 
 class Variables(object):
 	ADDR_scene = 16
-	scene_data = [1, 1, 0] #sound id, bassboost
+	scene_data = [1, 1, 0, 1] #sound id, bassboost, retry
 	music_list = ["Shrek theme", "From Vint", "Votting", "Soccer physics", "Dmitry", "John Sina", "SILENCE"]
 
 	ADDR_light = 17
-	light_data = [1, 100, 100, 100, 100, 100]#bright, red, green, blue, mountain
+	light_data = [1, 100, 100, 100, 100, 100]
+	#bright, red, green, blue, mountain
 
 	ADDR_vegetables = 18
-	vegetables_data = [1, 30, 100, 100, 100, 100, 25]#temperature, bright, red, green, blue, temperature now
+	vegetables_data = [1, 30, 100, 100, 100, 100, 25]
+	#temperature, bright, red, green, blue, temperature now
 
 	# radio and wheel have not address and set with generators
 	radio_data = [1]#on or off
-	wheel_data = [1, 100]#speed and light in %
+	wheel_data = [1, 100]#tariff on or off
 
 
 	ADDR_h_gen = 32

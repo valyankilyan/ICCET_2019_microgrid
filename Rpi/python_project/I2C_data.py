@@ -17,6 +17,7 @@ class Data:
 				try:
 					msg = i2c_msg.write(addr, data)
 					bus.i2c_rdwr(msg)	
+					print "send data to " + addr + " " + data 
 				
 				except IOError as e:
 					print "I/O error({0}): {1}".format(e.errno, e.strerror)
