@@ -17,7 +17,7 @@
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока</h3>
             <span  @click="but = !but"><v-switch  v-model="SGswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
-            
+              <span class="pl-4">Мощность{{}} Вт</span>
         </v-container>
         
           
@@ -201,7 +201,7 @@
     },
     created() {
     this.$socket.addMessageHandler(this.messageHandle);
-    this.$socket.send('scene');
+    
   
   //this.$socket.send('Встречаются два новых русских, один у другого интересуется: - Слышь, Вован, а вот ты стометровку за сколько пробежишь? - Ну дык, Колян, за штуку баксов, ...');
   },
@@ -236,7 +236,7 @@
   },
   methods: {
     messageHandle(message) {
-      console.log("обработано в Scene " + message);
+      console.log("обработано в SmartGr " + message);
     },
     sendData() {
       console.log(this.SCmusic);

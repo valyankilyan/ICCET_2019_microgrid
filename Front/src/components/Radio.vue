@@ -14,6 +14,7 @@
           <v-switch v-model="RAswitch1" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
         </span>
         <span>{{but ? 'on' : 'off'}}</span>
+          <span class="pl-4">Мощность{{}} Вт</span>
       </v-container>
 
       <v-container fluid class="d-flex mb-0 pb-0">
@@ -87,7 +88,7 @@
 export default {
   data() {
     return {
-      RAsliderMax: "", //уровень громкости (возвращает от 0 до 100)
+      RAsliderMax: 0, //уровень громкости (возвращает от 0 до 100)
       but: false, // on/off кнопки включения   (true/false)
       RAswitch1: false, // значение слайдера on/off (true/false)
       RAswitch2: false, //значение слайдера акум/солнце  (true/false)
@@ -106,6 +107,42 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    this.$socket.addMessageHandler(this.messageHandle);
+    
+  
+  //this.$socket.send('Встречаются два новых русских, один у другого интересуется: - Слышь, Вован, а вот ты стометровку за сколько пробежишь? - Ну дык, Колян, за штуку баксов, ...');
+  },
+  destroyed() {
+    this.$socket.removeMessageHandler(this.messageHandle);
+  },
+  watch: {
+    RAsliderMax: function() {
+      this.sendData();
+    },
+    RAswitch1: function() {
+      this.sendData();
+    },
+    RAswitch2: function() {
+      this.sendData();
+    }
+  },
+  methods: {
+    messageHandle(message) {
+      console.log("обработано в Radio " + message);
+    },
+    sendData() {
+      console.log(this.SCmusic);
+
+      let payload = {
+        RAsliderMax: this.RAsliderMax,  //кнопка повтора трека  врзвращает =>(true)
+        RAswitch1: this.RAswitch1,  // значение слайдера on/off (true/false)
+        RAswitch2: this.RAswitch2  //значение слайдера акум/солнце  (true/false)
+      };
+
+      this.$socket.send(JSON.stringify(payload));
+    }
   }
 };
 </script>

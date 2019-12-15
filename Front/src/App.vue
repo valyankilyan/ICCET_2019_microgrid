@@ -5,7 +5,7 @@
         <router-link to="/" style="text-decoration: none; color: white">
           <span>Кванториада</span>
         </router-link>
-        <span class="font-weight-light">s </span>
+        <span class="font-weight-light"> </span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>

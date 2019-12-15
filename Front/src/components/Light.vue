@@ -17,7 +17,7 @@
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока</h3>
             <span  @click="but = !but"><v-switch  v-model="LIswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
-            
+            <span class="pl-4">Мощность{{}} Вт</span>
         </v-container>
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Уровень яркости:</h3>
@@ -176,10 +176,10 @@
   export default {
     data () {
       return {
-        LIsliderAll:'',               //общий уровень освещения (щт 0 до 100%)
-        LIsliderRed:'',               //уровень красного цвета (возвращает от 0 до 100)  
-        LIsliderGreen:'',             //уровень зеленого цвета (возвращает от 0 до 100)
-        LIsliderBlue:'',              //уровень голубого цвета (возвращает от 0 до 100)
+        LIsliderAll: 0,               //общий уровень освещения (щт 0 до 100%)
+        LIsliderRed: 0,               //уровень красного цвета (возвращает от 0 до 100)  
+        LIsliderGreen: 0,             //уровень зеленого цвета (возвращает от 0 до 100)
+        LIsliderBlue: 0,              //уровень голубого цвета (возвращает от 0 до 100)
         but:false,                  // on/off кнопки включения   (true/false)
         but2:false,                 // on/off кнопки ласпа на горе   (true/false) 
         LIswitch1: false,             // значение слайдера on/off (true/false)
@@ -200,7 +200,59 @@
             calories: 518,
           },
         ],
-      }
+      };
     },
+    created() {
+    this.$socket.addMessageHandler(this.messageHandle);
+    
+  
+  //this.$socket.send('Встречаются два новых русских, один у другого интересуется: - Слышь, Вован, а вот ты стометровку за сколько пробежишь? - Ну дык, Колян, за штуку баксов, ...');
+  },
+  destroyed() {
+    this.$socket.removeMessageHandler(this.messageHandle);
+  },
+  watch: {
+    LIsliderAll: function() {
+      this.sendData();
+    },
+    LIsliderRed: function() {
+      this.sendData();
+    },
+    LIsliderGreen: function() {
+      this.sendData();
+    },
+    LIsliderBlue: function() {
+      this.sendData();
+    },
+    LIswitch1: function() {
+      this.sendData();
+    },
+    LIswitch2: function() {
+      this.sendData();
+    },
+    LIswitch3: function() {
+      this.sendData();
+    }
+  },
+  methods: {
+    messageHandle(message) {
+      console.log("обработано в Light " + message);
+    },
+    sendData() {
+      console.log(this.SCmusic);
+
+      let payload = {
+        LIsliderAll: this.LIsliderAll,               //общий уровень освещения (щт 0 до 100%)
+        LIsliderRed: this.LIsliderRed,               //уровень красного цвета (возвращает от 0 до 100)  
+        LIsliderGreen: this.LIsliderGreen,             //уровень зеленого цвета (возвращает от 0 до 100)
+        LIsliderBlue: this.LIsliderBlue,              //уровень голубого цвета (возвращает от 0 до 100)
+        LIswitch1: this.LIswitch1,             // значение слайдера on/off (true/false)
+        LIswitch2: this.LIswitch2,             // значение слайдера лампа на горе   (true/false)
+        LIswitch3: this.LIswitch3             //значение слайдера акум/солнце  (true/false)
+      };
+
+      this.$socket.send(JSON.stringify(payload));
+    }
   }
+  };
 </script>

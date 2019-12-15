@@ -14,6 +14,7 @@
           <v-switch v-model="SCswitch1" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
         </span>
         <span>{{but ? 'on' : 'off'}}</span>
+          <span class="pl-4">Мощность{{}} Вт</span>
       </v-container>
 
       <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">

@@ -81,7 +81,7 @@
                     class="py-4 text-center white--text"
                     cols="12"
             >
-                {{ new Date().getFullYear() }} — <strong>PollsApp</strong>
+                {{ new Date().getFullYear() }} — <strong>Карельские энергетики</strong>
             </v-col>
         </v-row>
     </v-footer>

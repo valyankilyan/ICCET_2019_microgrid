@@ -17,7 +17,7 @@
         <v-container fluid class="d-flex mb-0 pb-0">
             <h3 class="pl-3">Подача тока</h3>
             <span  @click="but = !but"><v-switch  v-model="WHswitch1" :label="``" class="ma-0 ml-3 pa-0" ></v-switch></span><span>{{but ? 'on' : 'off'}}</span>
-            
+              <span class="pl-4">Мощность{{}} Вт</span>
         </v-container>
         
           
@@ -81,30 +81,8 @@
                 </v-expansion-panels>
                     
         </section>        
-
-                
-
-     
-
-   
-
-
-
-    
-    
-
-
-
-
   </v-card>
 </template>
-
-
-
-
-
-
-
 
 
 <script>
@@ -150,7 +128,7 @@
       },
       methods: {
         messageHandle(message) {
-          console.log("обработано в Scene " + message);
+          console.log("обработано в Wheel " + message);
         },
         sendData() {
           console.log(this.SCmusic);
