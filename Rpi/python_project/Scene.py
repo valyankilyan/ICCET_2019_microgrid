@@ -20,10 +20,8 @@ class Scene:
 			var.scene_data[3] = 1 if dic["retryTrack"] == True else 0 
 		except:
 			error.log("Scene rewrite data")
-		try:
-			print var.scene_data[1:]
-			i2c.write(var.scene_addr, var.scene_data[1:])
-		except:
-			print "here"
+		print var.scene_data[1:]
+		i2c.write(var.scene_addr, var.scene_data[1:])
+	
 
 {u'retryTrack': False, u'bassboosted': False, u'track': 3, u'type': u'Scene', u'currentSupply': True, u'tariff': False}
