@@ -7,7 +7,7 @@ error = Error()
 class Variables(object):
 	scene_addr = 16
 	scene_data = [1, 1, 0, 1] #sound id, bassboost, retry
-	music_list = ["Shrek theme", "From Vint", "Votting", "Soccer physics", "Dmitry", "John Sina", "SILENCE"]
+	music_list = ["Shrek theme", "From Vint", "Soccer physics", "Dmitry", "John Sina", "SILENCE"]
 
 	light = 17
 	light_data = [1, 100, 100, 100, 100, 100]

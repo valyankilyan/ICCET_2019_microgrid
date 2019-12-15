@@ -1,7 +1,5 @@
 from smbus2 import SMBus, i2c_msg
-import time
-import os
-import sys
+import time, os, sys, threading
 from Error import Error
 
 error = Error()
@@ -16,10 +14,12 @@ class Data:
 		# try:
 		# 	with SMBus(1) as bus:
 		# 		try:
-		msg = i2c_msg.write(addr, data)
-		bus.i2c_rdwr(msg)	
-		print "send data to " + addr + " " + data 
-		
+		def try_to_do():
+			msg = i2c_msg.write(addr, data)
+			bus.i2c_rdwr(msg)	
+			print "send data to " + addr + " " + data 
+
+		threading.Thread(target = try_to_do).start()
 		# 		except IOError as e:
 		# 			print "I/O error({0}): {1}".format(e.errno, e.strerror)
 		# 			time.sleep(1)
