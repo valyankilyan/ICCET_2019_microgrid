@@ -31,6 +31,7 @@ class Data:
 			print "Unexpected error:", sys.exc_info()[0]
 			time.sleep(1)
 			raise
+		time.sleep(0.1)
 
 	def read(self, addr, data):
 		print "read_byte"

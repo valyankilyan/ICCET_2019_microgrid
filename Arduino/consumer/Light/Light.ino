@@ -1,9 +1,9 @@
 #include <Wire.h>
 
-#define MOUNTAIN_PIN 10
+#define MOUNTAIN_PIN 8
 
-uint8_t mountain_bright = 1;
-int light_pins[3] = {2, 3, 5};
+bool mountain_bright = 0;
+int light_pins[3] = {6, 3, 5};
 uint8_t light[3] = {255, 255, 255};
 
 void setup() {  
