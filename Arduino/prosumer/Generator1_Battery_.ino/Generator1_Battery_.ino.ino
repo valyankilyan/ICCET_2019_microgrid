@@ -1,17 +1,14 @@
-// Этот код обязательно для Arduino Nano или Arduino Mega
+/// Этот код обязательно для Arduino Nano или Arduino Mega
 
 #include "ACS712.h"
 #include <Wire.h>
-#include <iarduino_I2C_connect.h>
-//
-//float R1 = 100000.0;
-//float R2 = 10000.0; 
+#include <iarduino_I2C_connect.h> 
 
 uint8_t power_1 = 0;
 uint8_t power_2 = 0;
 uint8_t power_3 = 0;
-uint8_t power_4 = 0;
-uint8_t power_5 = 0;
+uint8_t power_4 = 255;
+uint8_t power_5 = 255;
 
 float sum_1 = 0;
 float sum_2 = 0;
@@ -19,13 +16,13 @@ float sum_3 = 0;
 float sum_4 = 0;
 float sum_5 = 0;
 
-const int U = 0;
+const int U = 9;
 
-ACS712 sensor_1(ACS712_05B, A1);
-ACS712 sensor_2(ACS712_05B, A2);
-ACS712 sensor_3(ACS712_05B, A3);
-ACS712 sensor_4(ACS712_05B, A4);
-ACS712 sensor_5(ACS712_05B, A5);
+ACS712 sensor_1(ACS712_05B, A0);
+ACS712 sensor_2(ACS712_05B, A1);
+ACS712 sensor_3(ACS712_05B, A2);
+ACS712 sensor_4(ACS712_05B, A3);
+ACS712 sensor_5(ACS712_05B, A6);
 
 void setup() {
   
@@ -58,19 +55,12 @@ void setup() {
 }
 
 void loop() {
-
-//      U = analogRead(A6);
-//      
-//      U = ((U * 5.0)/1024.0) / (R2/(R1+R2));
-//      
-//      if (U<0.09) {
-//        U=0.0;
-//      }
-      analogWrite(3, 255*power_1);
-      analogWrite(5, 255*power_2);
-      analogWrite(6, 255*power_3);
-      analogWrite(9, 255*power_4);
-      analogWrite(10, 255*power_5); 
+      digitalWrite(11, on_pr);
+      digitalWrite(3, power_1);
+      digitalWrite(5, power_2);
+      digitalWrite(6, power_3);
+      digitalWrite(9, power_4);
+      digitalWrite(10, power_5); 
 
       float I_1 = sensor_1.getCurrentDC();
       float I_2 = sensor_2.getCurrentDC();
@@ -115,6 +105,7 @@ void receiveEvent(int bytes) {
     power_3 = Wire.read();
     power_4 = Wire.read();
     power_5 = Wire.read();
+    on_pr = Wire.read();
   }
 }
 
@@ -134,6 +125,5 @@ void requestEvent(){
 //  Wire.write("5");
   Wire.write((uint8_t *)&sum_5, sizeof(&sum_5));
 
-//  Wire.write((uint8_t *)&U, sizeof(&U));
 
 }
