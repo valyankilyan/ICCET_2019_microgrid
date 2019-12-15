@@ -18,7 +18,7 @@ class Data:
 			with SMBus(1) as bus:
 				msg = i2c_msg.write(addr, data)
 				bus.i2c_rdwr(msg)	
-				print "send data to " + addr + " " + data 
+				# print "send data to " + addr + " " + data 
 
 		threading.Thread(target = try_to_do).start()
 		# 		except IOError as e:
