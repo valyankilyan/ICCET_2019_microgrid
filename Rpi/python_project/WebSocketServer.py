@@ -1,9 +1,11 @@
 import random, time, threading, json
 
+from Error import Error
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 from Consumer import Consumer
 
 consumer = Consumer()
+error = Error()
 
 address = 8000
 
@@ -13,9 +15,13 @@ class Server(WebSocket):
         
         self.sendMessage(self.data)
         print(self.data)
-
-        dic = json.loads(self.data)
-        consumer.new_data(dic)
+        try:
+            dic = json.loads(self.data)
+            print dic
+            # consumer.new_data(dic)
+        except:
+            error.log("data sent isn't JSON")
+            self.sendMessage("you sent not JSON")
     
 
     def handleConnected(self):
