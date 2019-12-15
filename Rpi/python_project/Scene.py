@@ -4,7 +4,6 @@ from Error import Error
 
 error = Error()
 var = Variables()
-i2c = Data()
 
 class Scene:
 	def __init__(self):
@@ -21,6 +20,8 @@ class Scene:
 		except:
 			error.log("Scene rewrite data")
 		print var.scene_data[1:]
+
+		i2c = Data()
 		i2c.write(var.scene_addr, var.scene_data[1:])
 	
 
