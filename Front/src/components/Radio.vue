@@ -117,7 +117,13 @@ export default {
   created() {
     this.$socket.addMessageHandler(this.messageHandle);
 
-    //this.$socket.send('Встречаются два новых русских, один у другого интересуется: - Слышь, Вован, а вот ты стометровку за сколько пробежишь? - Ну дык, Колян, за штуку баксов, ...');
+    const radio = this.$store.getters.RADIO;
+    if (radio) {
+      this.currentSupply = radio.currentSupply;
+      this.tariff = radio.tariff;
+      this.volume = radio.volume;
+
+    }
   },
   destroyed() {
     this.$socket.removeMessageHandler(this.messageHandle);
@@ -148,6 +154,7 @@ export default {
       };
 
       this.$socket.send(JSON.stringify(payload));
+      this.$store.commit("SET_RADIO", payload);
     }
   }
 };

@@ -91,7 +91,7 @@ export default {
     return {
       akbTimer: new Timer(),
       hydrogenTimer: new Timer(),
-      power: 123,
+      power: 0,
       currentSupply: false, // значение слайдера on/off (true/false)
       tariff: false, //значение слайдера акум/солнце  (true/false)
       pays: [
