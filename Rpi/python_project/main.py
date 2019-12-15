@@ -22,10 +22,10 @@ class Server(WebSocket):
             error.log("data sent isn't JSON")
             self.sendMessage("you sent not JSON")
 
-        try:
+        # try:
             consumer.new_data(dic)
-        except: 
-            error.log("consumer doesn't work")
+        # except: 
+        #     error.log("consumer doesn't work")
     
 
     def handleConnected(self):
