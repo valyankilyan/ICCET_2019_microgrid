@@ -23,7 +23,7 @@ class Scene:
 		data = var.scene_data[1:]
 		print data
 
-		i2c.write(var.scene_addr, data)
+		print i2c.write(var.scene_addr, data) == None
 	
 
 {u'retryTrack': False, u'bassboosted': False, u'track': 3, u'type': u'Scene', u'currentSupply': True, u'tariff': False}
