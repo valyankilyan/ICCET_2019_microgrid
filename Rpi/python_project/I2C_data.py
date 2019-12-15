@@ -12,29 +12,25 @@ class Data:
 	def write(self, addr, data):
 		print "write i2c data " , addr, " ", data 
 		try:
-			with SMBus(1) as bus:
-				try:
-					def try_to_do():
-						with SMBus(1) as bus:
-							msg = i2c_msg.write(addr, data)
-							bus.i2c_rdwr(msg)	
-				# print "send data to " + addr + " " + data 
+			def try_to_do():
+				with SMBus(1) as bus:
+					msg = i2c_msg.write(addr, data)
+					bus.i2c_rdwr(msg)	
+		
+			threading.Thread(target = try_to_do).start()
 
-					threading.Thread(target = try_to_do).start()
-				except IOError as e:
-					print "I/O error({0}): {1}".format(e.errno, e.strerror)
-					time.sleep(1)
-				
-				except ValueError:
-					print "Could not convert data to an integer."
-					time.sleep(1)
-				
-				except:
-					print "Unexpected error:", sys.exc_info()[0]
-					time.sleep(1)
-					raise
-		except: 
-			print "u have not i2c"
+		except IOError as e:
+			print "I/O error({0}): {1}".format(e.errno, e.strerror)
+			time.sleep(1)
+		
+		except ValueError:
+			print "Could not convert data to an integer."
+			time.sleep(1)
+		
+		except:
+			print "Unexpected error:", sys.exc_info()[0]
+			time.sleep(1)
+			raise
 
 	def read(self, addr, data):
 		print "read_byte"
