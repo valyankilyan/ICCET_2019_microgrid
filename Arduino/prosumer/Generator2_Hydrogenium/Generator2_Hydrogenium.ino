@@ -19,7 +19,7 @@ float sum_3 = 0;
 float sum_4 = 0;
 float sum_5 = 0;
 
-float U = 0;
+float U = 9;
 
 ACS712 sensor_1(ACS712_20A, A1);
 ACS712 sensor_2(ACS712_20A, A2);
@@ -43,9 +43,9 @@ void setup() {
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
 
-  pinMode(A6, INPUT); //Voltage
+//   pinMode(A6, INPUT); //Voltage
   
-  Wire.begin(0xA0);
+  Wire.begin(0x21);
 
   sensor_1.calibrate();
   sensor_2.calibrate();
@@ -59,12 +59,12 @@ void setup() {
 
 void loop() {
 
-      U = analogRead(A6);
+//       U = analogRead(A6);
       
-      U = ((U * 5.0)/1024.0) / (R2/(R1+R2));
+//       U = ((U * 5.0)/1024.0) / (R2/(R1+R2));
       
-      if (U<0.09) {
-        U=0.0;
+//       if (U<0.09) {
+//         U=0.0;
       }
 
       float I_1 = sensor_1.getCurrentDC();
@@ -73,17 +73,17 @@ void loop() {
       float I_4 = sensor_4.getCurrentDC();
       float I_5 = sensor_5.getCurrentDC();
     
-      sum_1 = U*I_1;
+      sum_1 = 5*I_1;
       sum_2 = U*I_2;
-      sum_3 = U*I_3;
+      sum_3 = 3.3*I_3;
       sum_4 = U*I_4;
       sum_5 = U*I_5;
         
-      analogWrite(4, 255*(power_1/100));
-      analogWrite(5, 255*(power_1/100));
-      analogWrite(6, 255*(power_1/100));
-      analogWrite(9, 255*(power_1/100));
-      analogWrite(10, 255*(power_1/100)); 
+      digitalWrite(4, 255*(power_1/100));
+      digitalWrite(5, 255*(power_1/100));
+      digitalWrite(6, 255*(power_1/100));
+      digitalWrite(9, 255*(power_1/100));
+      digitalWrite(10, 255*(power_1/100)); 
 }
 
 void receiveEvent(int bytes) {
@@ -97,13 +97,13 @@ void receiveEvent(int bytes) {
 }
 
 void requestEvent(){
-  Wire.write("1");
+//   Wire.write("1");
   Wire.write((uint8_t *)&sum_1, sizeof(&sum_1));//First
   
-  Wire.write("2");
+//   Wire.write("2");
   Wire.write((uint8_t *)&sum_2, sizeof(&sum_2));//Second
   
-  Wire.write("3");
+//   Wire.write("3");
   Wire.write((uint8_t *)&sum_3, sizeof(&sum_// Этот код обязательно для Arduino Nano или Arduino Mega
 
 #include "ACS712.h"
@@ -220,31 +220,20 @@ void receiveEvent(int bytes) {
     power_5 = Wire.read();
   }
 }
-
 void requestEvent(){
-//  Wire.write("1");
+//   Wire.write("1");
   Wire.write((uint8_t *)&sum_1, sizeof(&sum_1));//First
   
-//  Wire.write("2");
+//   Wire.write("2");
   Wire.write((uint8_t *)&sum_2, sizeof(&sum_2));//Second
   
-//  Wire.write("3");
-  Wire.write((uint8_t *)&sum_3, sizeof(&sum_3));
+//   Wire.write("3");
+  Wire.write((uint8_t *)&sum_3, sizeof(&sum_3, sizeof(&sum_3));
   
 //  Wire.write("4");
   Wire.write((uint8_t *)&sum_4, sizeof(&sum_4));
 
 //  Wire.write("5");
-  Wire.write((uint8_t *)&sum_5, sizeof(&sum_5));
-
-  Wire.write((uint8_t *)&U, sizeof(&U));
-
-}3));
-  
-  Wire.write("4");
-  Wire.write((uint8_t *)&sum_4, sizeof(&sum_4));
-
-  Wire.write("5");
   Wire.write((uint8_t *)&sum_5, sizeof(&sum_5));
 
   Wire.write((uint8_t *)&U, sizeof(&U));
