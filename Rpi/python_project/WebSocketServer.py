@@ -1,6 +1,11 @@
 import random, time, threading, json
 
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+from Consumer import Consumer
+
+consumer = Consumer()
+
+address = 8000
 
 class Server(WebSocket):
 
@@ -9,12 +14,9 @@ class Server(WebSocket):
         self.sendMessage(self.data)
         print(self.data)
 
-        def run():
-            dic = json.loads(self.data)
-            for i in dic:
-                print i, dic[i]    
-        
-        threading.Thread(target=run).start()
+        dic = json.loads(self.data)
+        consumer.new_data(dic)
+    
 
     def handleConnected(self):
         print(self.address, 'connected')
@@ -27,5 +29,5 @@ class Server(WebSocket):
 
 
 print "starting server"
-serv = SimpleWebSocketServer('', 1234, Server)
+serv = SimpleWebSocketServer('', address, Server)
 serv.serveforever()
