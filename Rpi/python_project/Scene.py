@@ -17,7 +17,7 @@ class Scene:
 			var.scene_data[0] = dic["currentSupply"]
 			var.scene_data[1] = dic["track"]
 			var.scene_data[2] = 1 if dic["bassboosted"] == True else 0 
-			var.scene_data[3] = 1 if dic["retryTrack"] == True else 0 
+			var.scene_data[3] = 1 if dic["retryTrack"] == "True" else 0 
 		except:
 			error.log("Scene rewrite data")
 		
