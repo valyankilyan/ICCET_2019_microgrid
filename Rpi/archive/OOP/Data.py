@@ -12,6 +12,7 @@ class Data:
 		print("init data")
 
 	def write(self, addr, data):
+		print "write i2c data " , addr, " ", data 
 		try:
 			with SMBus(1) as bus:
 				try:
