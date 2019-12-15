@@ -86,6 +86,7 @@
 
 
 <script>
+ 
   export default {
     data () {
       return {
@@ -110,6 +111,7 @@
         ],
       };
     },
+    
     created() {
         this.$socket.addMessageHandler(this.messageHandle);
       //  this.$socket.send('scene');
@@ -119,7 +121,7 @@
         this.$socket.removeMessageHandler(this.messageHandle);
       },
       watch: {
-        WHswitch: function() {
+        WHswitch1: function() {
           this.sendData();
         },
          WHswitch2: function() {
@@ -131,7 +133,8 @@
           console.log("обработано в Wheel " + message);
         },
         sendData() {
-          console.log(this.SCmusic);
+         // console.log(this.SCmusic);
+       // store.commit('increment');
 
           let payload = {
              WHswitch1: this.WHswitch1,       // значение слайдера on/off (true/false)
@@ -143,4 +146,17 @@
       }
 
   };
+ /* const store = new Vuex.Store({
+  state: {
+        but:false,            // on/off кнопки включения   (true/false)
+        WHswitch1: false,       // значение слайдера on/off (true/false)
+        WHswitch2: false,
+  },
+  mutations: {
+  increment(state) {
+      // изменяем состояние
+      state.WHswitch1;
+  }
+}});
+*/
 </script>
