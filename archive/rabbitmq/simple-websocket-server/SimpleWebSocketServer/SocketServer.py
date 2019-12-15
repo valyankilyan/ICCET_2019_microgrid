@@ -30,5 +30,5 @@ class SocketServer(WebSocket):
 		self.sendMessage(string)
 
 
-server = SimpleWebSocketServer('', 8001, SimpleEcho)
+server = SimpleWebSocketServer('', 8123, SocketServer)
 server.serveforever()

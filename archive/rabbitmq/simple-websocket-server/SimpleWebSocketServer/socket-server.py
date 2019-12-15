@@ -69,11 +69,12 @@ class SimpleEcho(WebSocket):
 
 # t = threading.Thread(target=test_threading)
 
-server = SimpleWebSocketServer('', 8001, SimpleEcho)
+server = SimpleWebSocketServer('', 1234, SimpleEcho)
 
 # t.start()
 
 server.serveforever()
+print "start"
 
 
 # from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
