@@ -22,5 +22,5 @@ class Light:
 			var.light_data[5] = dic["mountain"]
 		except:
 			error.log("Light rewrite data")
-
+	
 		i2c.write(var.light_addr, var.light_data[1:])

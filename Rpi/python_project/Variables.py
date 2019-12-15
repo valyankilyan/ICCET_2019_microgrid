@@ -9,11 +9,11 @@ class Variables(object):
 	scene_data = [1, 1, 0, 1] #sound id, bassboost, retry
 	music_list = ["Shrek theme", "From Vint", "Soccer physics", "Dmitry", "John Sina", "SILENCE"]
 
-	light = 17
+	light_addr = 17
 	light_data = [1, 100, 100, 100, 100, 100]
 	#bright, red, green, blue, mountain
 
-	vegetables = 18
+	vegetables_addr = 18
 	vegetables_data = [1, 30, 100, 100, 100, 100, 25]
 	#temperature, bright, red, green, blue, temperature now
 
