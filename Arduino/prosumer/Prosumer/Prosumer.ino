@@ -20,11 +20,11 @@ float sum_3 = 0;
 float sum_4 = 0;
 float sum_5 = 0;
 
-ACS712 sensor_1(ACS712_05B, A1);
-ACS712 sensor_2(ACS712_05B, A2);
-ACS712 sensor_3(ACS712_05B, A3);
-ACS712 sensor_4(ACS712_05B, A4);
-ACS712 sensor_5(ACS712_05B, A5);
+ACS712 sensor_1(ACS712_05B, A0);
+ACS712 sensor_2(ACS712_05B, A1);
+ACS712 sensor_3(ACS712_05B, A2);
+ACS712 sensor_4(ACS712_05B, A3);
+ACS712 sensor_5(ACS712_05B, A4);
 
 void setup() {
   
@@ -44,7 +44,7 @@ void setup() {
 
   pinMode(A6, INPUT); //Voltage
   
-  Wire.begin(0xA1); 
+  Wire.begin(0x44); 
 
   sensor_1.calibrate();
   sensor_2.calibrate();
@@ -58,30 +58,30 @@ void setup() {
 
 void loop() {
 
-      U = analogRead(A6);
+      U_bat = analogRead(A6);
       
-      U = ((U * 5.0)/1024.0) / (R2/(R1+R2));
+      U_bat = ((U * 5.0)/1024.0) / (R2/(R1+R2));
       
       if (U<0.09)
         U=0.0;
-
       
       
-      if(U < 7){
-        analogWrite(4, 0);
-        analogWrite(5, 0);
-        analogWrite(6, 0);
-        analogWrite(9, 0);
-        analogWrite(10, 0); 
+      
+      if(U_bat < 11,8){
+        digitalWrite(11, 0);
+        digitalWrite(3, 0);
+        digitalWrite(5, 0);
+        digitalWrite(6, 0);
+        digitalWrite(9, 0);
+        digitalWrite(10, 0); 
       }else{
-        analogWrite(4, 255*(power_1/100));
-        analogWrite(5, 255*(power_1/100));
-        analogWrite(6, 255*(power_1/100));
-        analogWrite(9, 255*(power_1/100));
-        analogWrite(10, 255*(power_1/100));   
+        digitalWrite(11, 1);
+        digitalWrite(3, 255);
+        digitalWrite(5, 255);
+        digitalWrite(6, 255);
+        digitalWrite(9, 255);
+        digitalWrite(10, 255);   
       }
-
-      
 
       float I_1 = sensor_1.getCurrentDC();
       float I_2 = sensor_2.getCurrentDC();
@@ -146,6 +146,6 @@ void requestEvent(){
 //  Wire.write("5");
   Wire.write((uint8_t *)&sum_5, sizeof(&sum_5));
 
-  Wire.write((uint8_t *)&U, sizeof(U)); 
+  Wire.write((uint8_t *)&U_bat, sizeof(U_bat)); 
 
 }
