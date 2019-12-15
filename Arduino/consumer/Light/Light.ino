@@ -24,7 +24,8 @@ void loop() {
 void receiveEvent(int bytes) {
   if(bytes>1){
     for(int i = 0; i < 3; i++)
-      light[i] = map(Wire.read(), 0, 100, 0, 255);
+      light[i] =  double(Wire.read()) / 100 * 255;
+          
     mountain_bright = Wire.read();
   }
 }

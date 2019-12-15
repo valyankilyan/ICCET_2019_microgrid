@@ -10,8 +10,8 @@ class Variables(object):
 	music_list = ["Shrek theme", "From Vint", "Soccer physics", "Dmitry", "John Sina", "SILENCE"]
 
 	light_addr = 17
-	light_data = [1, 100, 100, 100, 100, 100]
-	#bright, red, green, blue, mountain
+	light_data = [1, 100, 100, 100, 100]
+	#current, 1, 2, 3, projector
 
 	vegetables_addr = 18
 	vegetables_data = [1, 30, 100, 100, 100, 100, 25]
