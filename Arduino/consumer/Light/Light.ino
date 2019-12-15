@@ -1,20 +1,14 @@
 #include <Wire.h>
-#include <SPI.h>
 
-#define RED_PIN 2
-#define GREEN_PIN 3
-#define BLUE_PIN 5
 #define MOUNTAIN_PIN 10
 
-double bright = 1; 
-uint8_t mountain_bright = 255;
+uint8_t mountain_bright = 1;
+int light_pins[3] = {2, 3, 5};
 uint8_t light[3] = {255, 255, 255};
 
-void setup() {
-  
-  pinMode(RED_PIN,OUTPUT); 
-  pinMode(GREEN_PIN,OUTPUT); 
-  pinMode(BLUE_PIN,OUTPUT); 
+void setup() {  
+  for(int i = 0; i < 3; i++)
+    pinMode(light_pins[i], OUTPUT);  
   pinMode(MOUNTAIN_PIN, OUTPUT);
 
   Wire.begin(0x11); 
@@ -22,17 +16,15 @@ void setup() {
 }
 
 void loop() {
-  analogWrite(RED_PIN, light[0]);
-  analogWrite(GREEN_PIN, light[1]);
-  analogWrite(BLUE_PIN, light[2]);
-  analogWrite(MOUNTAIN_PIN, mountain_bright);
+  for(int i = 0; i < 3; i++)
+    analogWrite(light_pins[i], light[i]);
+  digitalWrite(MOUNTAIN_PIN, mountain_bright);
 }
 
 void receiveEvent(int bytes) {
   if(bytes>1){
-    bright = (double)Wire.read()/100;
     for(int i = 0; i < 3; i++)
-      light[i] = map(Wire.read(), 0, 100, 0, 255) * bright;
-    mountain_bright = map(Wire.read(), 0, 100, 0, 255) * bright;
+      light[i] = map(Wire.read(), 0, 100, 0, 255);
+    mountain_bright = Wire.read();
   }
 }
