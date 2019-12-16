@@ -14,7 +14,7 @@ class Variables(object):
 	#current, 1, 2, 3, projector
 
 	vegetables_addr = 18
-	vegetables_data = [1, 30, 100, 100, 100, 100, 25]
+	vegetables_data = [1, 30, 100, 100, 100, 100]
 	#temperature, bright, red, green, blue, temperature now
 
 	# radio and wheel have not address and set with generators
