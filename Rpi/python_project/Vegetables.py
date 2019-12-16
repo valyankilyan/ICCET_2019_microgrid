@@ -24,4 +24,4 @@ class Vegetables:
 			error.log("Vegetables rewrite data")
 
 		i2c.write(var.vegetables_addr, var.vegetables_data[1:])
-{"type":"SmartGR","lightLevel":22,"redLevel":16,"greenLevel":15,"blueLevel":16,"temperature":23,"currentSupply":true,"tariff":false}
+# {"type":"SmartGR","lightLevel":22,"redLevel":16,"greenLevel":15,"blueLevel":16,"temperature":23,"currentSupply":true,"tariff":false}
