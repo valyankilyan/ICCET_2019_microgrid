@@ -16,10 +16,10 @@ class Vegetables:
 		try:
 			var.vegetables_data[0] = dic["currentSupply"]
 			var.vegetables_data[1] = dic["temperature"]
-			var.vegetables_data[3] = dic["lightLevel"]
-			var.vegetables_data[4] = dic["redlevel"]
-			var.vegetables_data[5] = dic["greenlevel"]
-			var.vegetables_data[6] = dic["bluelevel"]
+			var.vegetables_data[2] = dic["lightLevel"]
+			var.vegetables_data[3] = dic["redlevel"]
+			var.vegetables_data[4] = dic["greenlevel"]
+			var.vegetables_data[5] = dic["bluelevel"]
 		except:
 			error.log("Vegetables rewrite data")
 
