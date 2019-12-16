@@ -31,7 +31,7 @@ class Consumer:
 			print "it's Radio"
 			radio.new_data(dic)
 
-		elif dic["type"].lower() == "vegetables":
+		elif dic["type"].lower() == "smartgr":
 			print "it's Vegetables"
 			vegetables.new_data(dic)
 

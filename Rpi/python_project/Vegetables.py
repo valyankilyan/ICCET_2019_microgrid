@@ -14,14 +14,14 @@ class Vegetables:
 		print "Vegetables new data"
 		
 		try:
-			var.vegetables_data[0] = dic["power"]
+			var.vegetables_data[0] = dic["currentSupply"]
 			var.vegetables_data[1] = dic["temperature"]
-			var.vegetables_data[3] = dic["bright"]
-			var.vegetables_data[4] = dic["red"]
-			var.vegetables_data[5] = dic["green"]
-			var.vegetables_data[6] = dic["blue"]
-			var.vegetables_data[7] = dic["temperatue_now"]
+			var.vegetables_data[3] = dic["lightLevel"]
+			var.vegetables_data[4] = dic["redlevel"]
+			var.vegetables_data[5] = dic["greenlevel"]
+			var.vegetables_data[6] = dic["bluelevel"]
 		except:
 			error.log("Vegetables rewrite data")
 
 		i2c.write(var.vegetables_addr, var.vegetables_data[1:])
+{"type":"SmartGR","lightLevel":22,"redLevel":16,"greenLevel":15,"blueLevel":16,"temperature":23,"currentSupply":true,"tariff":false}
