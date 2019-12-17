@@ -35,14 +35,14 @@
         <v-expansion-panel>
           <v-expansion-panel-header>Ваш тариф</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <section class="d-flex mb-0 pb-0">
+           <section class="d-flex mb-0 pb-0">
               <span>
-                Солненая Панель
-                <br />3₽/кВт
+                Аккумулятор
+                <br />7₽/кВт
               </span>
               <v-switch v-model="tariff" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
               <span>
-                Аккумулятор
+                Водородные батарейки
                 <br />5₽/кВт
               </span>
             </section>
@@ -52,14 +52,20 @@
         <v-expansion-panel>
           <v-expansion-panel-header>Счет на оплату</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <section class="d-fle mb-0 pb-0">
+           <section class="d-fle mb-0 pb-0">
               <p>
-                <strong>Вы работаете:</strong> 15:23:43 сек
+                <strong>Вы работаете на акб:</strong>
+                {{this.akbTimer}} сек
+              </p>
+              <p>
+                <strong>Вы работаете на водороде:</strong>
+                {{this.hydrogenTimer}} сек
               </p>
               <span>
-                <strong>Сумма к оплате:</strong> 4565₽
+                <strong>Сумма к оплате:</strong>
+                {{totalSum}}₽
               </span>
-              <v-btn color="cyan lighten-1 pl-5" text>Оплатить</v-btn>
+              <v-btn color="cyan lighten-1 pl-5" text @click="pay">Оплатить</v-btn>
             </section>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -71,14 +77,14 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">Время работы</th>
-                    <th class="text-left">Оплачено,₽</th>
+                   <th class="text-left">Время работы</th>
+                    <th class="text-left">Сумма,₽</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="pay in pays" :key="pay.name">
-                    <td>{{ pay.name }}</td>
-                    <td>{{ pay.calories }}</td>
+                 <tr v-for="pay in pays" :key="pay.id">
+                    <td>{{ pay.workTime }}</td>
+                    <td>{{ pay.sum }}</td>
                   </tr>
                 </tbody>
               </template>
@@ -91,25 +97,32 @@
 </template>
 
 <script>
+import Timer from "@/plugins/timer.js";
+import Pay from "@/plugins/pay.js";
 export default {
   data() {
     return {
+      akbTimer: new Timer(),
+      hydrogenTimer: new Timer(),
       power: 0,
       volume: 0, //уровень громкости (возвращает от 0 до 100)
       currentSupply: false, // значение слайдера on/off (true/false)
       tariff: false, //значение слайдера акум/солнце  (true/false)
-      pays: [
+       pays: [
         {
-          name: "1:45:67",
-          calories: 157
+          id: 1,
+          workTime: "1:45:67",
+          sum: 100
         },
         {
-          name: "1:56:67",
-          calories: 237
+          id: 2,
+          workTime: "1:45:67",
+          sum: 100
         },
         {
-          name: "1:32:67",
-          calories: 518
+          id: 3,
+          workTime: "1:45:67",
+          sum: 100
         }
       ]
     };
@@ -128,23 +141,62 @@ export default {
   destroyed() {
     this.$socket.removeMessageHandler(this.messageHandle);
   },
+  computed: {
+    totalSum() {
+      const akbSeconds = this.akbTimer.seconds;
+      const hydrogenSeconds = this.hydrogenTimer.seconds;
+
+      const pay = new Pay(akbSeconds, hydrogenSeconds);
+
+      return pay.sum;
+    }
+  },
   watch: {
     volume: function() {
       this.sendData();
     },
     currentSupply: function() {
-      this.sendData();
+         this.sendData();
+
+      if (this.currentSupply) {
+        if (this.tariff) {
+          this.hydrogenTimer.start();
+        } else {
+          this.akbTimer.start();
+        }
+      } else {
+        this.hydrogenTimer.stop();
+        this.akbTimer.stop();
+      }
     },
     tariff: function() {
-      this.sendData();
+        this.sendData();
+      if (this.tariff) {
+        this.hydrogenTimer.start();
+        this.akbTimer.stop();
+      } else {
+        this.akbTimer.start();
+         this.hydrogenTimer.stop();
+      }
     }
   },
   methods: {
+    pay() {
+      const akbSeconds = this.akbTimer.seconds;
+      const hydrogenSeconds = this.hydrogenTimer.seconds;
+
+      const pay = new Pay(akbSeconds, hydrogenSeconds);
+
+      this.pays.unshift(pay);
+
+      this.akbTimer.clear();
+      this.hydrogenTimer.clear();
+    },
     messageHandle(message) {
       console.log("обработано в Radio " + message);
     },
     sendData() {
-      console.log(this.SCmusic);
+      
 
       let payload = {
         type: 'Radio',
