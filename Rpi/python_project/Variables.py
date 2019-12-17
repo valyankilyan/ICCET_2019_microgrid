@@ -22,12 +22,18 @@ class Variables(object):
 	wheel_data = [1, 100]#tariff on or off
 
 
-	h_gen = 32
-	data_h_gen = [1+2+4+8+16, 0, 0, 0, 0, 0]#consumers bit in bytes 0-sc, 1-lt, 2-veg, 3-rd, 4-wh; 
+	hydrogen_addr = 32
+	hydrogen_power = [0]#consumers bit in bytes 0-sc, 1-lt, 2-veg, 3-rd, 4-wh; 
+	hydrogen_pay = [0, 0, 0, 0, 0]
 	# 	scene_power, light_power, radio_power, vegetables_power, wheel power;
 
-	battery = 33
-	data_battery = [100, 100, 100] #test r, g, b
+	battery_addr = 33
+	battery_power = [0] #test r, g, b
+	battery_pay = [0, 0, 0, 0, 0]
+
+	prosumer_addr = 34
+	prosumer_power = [0] #test r, g, b
+	prosumer_pay = [0, 0, 0, 0, 0]
 
 	def __init__(self):
 		print "init var"

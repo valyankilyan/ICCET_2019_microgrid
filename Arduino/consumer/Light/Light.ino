@@ -7,6 +7,8 @@ int light_pins[3] = {6, 3, 5};
 uint8_t light[3] = {255, 255, 255};
 
 void setup() {  
+ 
+  
   for(int i = 0; i < 3; i++)
     pinMode(light_pins[i], OUTPUT);  
   pinMode(MOUNTAIN_PIN, OUTPUT);

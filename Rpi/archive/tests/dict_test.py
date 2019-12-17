@@ -13,5 +13,5 @@ js = '{"type":"Scene","WHswitch2":false}'
 dic = json.loads(js)
 print dic
 print dic["type"]
-tt = test()
-tt.dic["type"]("it's working")
+# tt = test()
+# tt.dic["type"]("it's working")

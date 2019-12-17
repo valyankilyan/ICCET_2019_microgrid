@@ -1,241 +1,73 @@
-// Этот код обязательно для Arduino Nano или Arduino Mega
-
 #include "ACS712.h"
 #include <Wire.h>
-#include <iarduino_I2C_connect.h>
+#include <StackArray.h>
 
-float R1 = 100000.0;
-float R2 = 10000.0; 
+#define CONS_COUNT 5 //КОЛИЧЕСТВО ПОТРЕБИТЕЛЕЙ
+const int U = 9;
+const int T = 50; // период измерения мощности
 
-uint8_t power_1 = 0;
-uint8_t power_2 = 0;
-uint8_t power_3 = 0;
-uint8_t power_4 = 0;
-uint8_t power_5 = 0;
+bool power[CONS_COUNT] = {0, 0, 0, 0, 0}, prosumer_power = 0;//включено устройство от даного источника или нет 
+float pay[CONS_COUNT] = {0, 0, 0, 0, 0};//сколько натикало на каждом ватт секунд 
+int controll_pin[CONS_COUNT] = {3, 5, 6, 9, 10};//пины на которых сидят транзисторы
 
-float sum_1 = 0;
-float sum_2 = 0;
-float sum_3 = 0;
-float sum_4 = 0;
-float sum_5 = 0;
+long long int last_pay_time = 0;
 
-float U = 9;
-
-ACS712 sensor_1(ACS712_20A, A1);
-ACS712 sensor_2(ACS712_20A, A2);
-ACS712 sensor_3(ACS712_20A, A3);
-ACS712 sensor_4(ACS712_20A, A4);
-ACS712 sensor_5(ACS712_20A, A5);
+ACS712 sensor_0(ACS712_05B, A1);
+ACS712 sensor_1(ACS712_05B, A1);
+ACS712 sensor_2(ACS712_05B, A2);
+ACS712 sensor_3(ACS712_05B, A3);
+ACS712 sensor_4(ACS712_05B, A6);
 
 void setup() {
-  
+  for(int i = 0; i < CONS_COUNT; i++)
+    pinMode(controll_pin[i], OUTPUT);
 
-  pinMode(4, OUTPUT);//For PWM 
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-
-
-  pinMode(A0, INPUT);//For sensors
-  pinMode(A1, INPUT);
-  pinMode(A2, INPUT);
-  pinMode(A4, INPUT);
-  pinMode(A5, INPUT);
-
-//   pinMode(A6, INPUT); //Voltage
-  
-  Wire.begin(0x21);
-
-  sensor_1.calibrate();
-  sensor_2.calibrate();
-  sensor_3.calibrate();
-  sensor_4.calibrate();
-  sensor_5.calibrate();
-
-  Wire.onReceive(receiveEvent);
-  Wire.onRequest(requestEvent);
-}
-
-void loop() {
-
-//       U = analogRead(A6);
-      
-//       U = ((U * 5.0)/1024.0) / (R2/(R1+R2));
-      
-//       if (U<0.09) {
-//         U=0.0;
-      }
-
-      float I_1 = sensor_1.getCurrentDC();
-      float I_2 = sensor_2.getCurrentDC();
-      float I_3 = sensor_3.getCurrentDC();
-      float I_4 = sensor_4.getCurrentDC();
-      float I_5 = sensor_5.getCurrentDC();
-    
-      sum_1 = 5*I_1;
-      sum_2 = U*I_2;
-      sum_3 = 3.3*I_3;
-      sum_4 = U*I_4;
-      sum_5 = U*I_5;
-        
-      digitalWrite(4, 255*(power_1/100));
-      digitalWrite(5, 255*(power_1/100));
-      digitalWrite(6, 255*(power_1/100));
-      digitalWrite(9, 255*(power_1/100));
-      digitalWrite(10, 255*(power_1/100)); 
-}
-
-void receiveEvent(int bytes) {
-  if(bytes>1){
-    power_1 = Wire.read();
-    power_2 = Wire.read();
-    power_3 = Wire.read();
-    power_4 = Wire.read();
-    power_5 = Wire.read();
-  }
-}
-
-void requestEvent(){
-//   Wire.write("1");
-  Wire.write((uint8_t *)&sum_1, sizeof(&sum_1));//First
-  
-//   Wire.write("2");
-  Wire.write((uint8_t *)&sum_2, sizeof(&sum_2));//Second
-  
-//   Wire.write("3");
-  Wire.write((uint8_t *)&sum_3, sizeof(&sum_// Этот код обязательно для Arduino Nano или Arduino Mega
-
-#include "ACS712.h"
-#include <Wire.h>
-#include <iarduino_I2C_connect.h>
-
-//float R1 = 100000.0;
-//float R2 = 10000.0; 
-
-uint8_t power_1 = 0;
-uint8_t power_2 = 0;
-uint8_t power_3 = 0;
-uint8_t power_4 = 0;
-uint8_t power_5 = 0;
-
-float sum_1 = 0;
-float sum_2 = 0;
-float sum_3 = 0;
-float sum_4 = 0;
-float sum_5 = 0;
-
-float U = 9;
-
-ACS712 sensor_1(ACS712_05B, A0);
-ACS712 sensor_2(ACS712_05B, A1);
-ACS712 sensor_3(ACS712_05B, A2);
-ACS712 sensor_4(ACS712_05B, A3);
-ACS712 sensor_5(ACS712_05B, A6);
-
-void setup() {
-
-  pinMode(3, OUTPUT);//For PWM 
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-
-
-  pinMode(A0, INPUT);//For sensors
+  pinMode(A0, INPUT);
   pinMode(A1, INPUT);
   pinMode(A2, INPUT);
   pinMode(A3, INPUT);
   pinMode(A6, INPUT);
-
-//  pinMode(A6, INPUT); //Voltage
   
-  Wire.begin(0xA0);
+  Wire.begin(0x22);
 
+  sensor_0.calibrate();
   sensor_1.calibrate();
   sensor_2.calibrate();
   sensor_3.calibrate();
   sensor_4.calibrate();
-  sensor_5.calibrate();
 
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
 }
 
 void loop() {
+      digitalWrite(11, prosumer_power);
+      for(int i = 0; i < CONS_COUNT; i++)
+        digitalWrite(controll_pin[i], power[i]);
 
-//      U = analogRead(A6);
-//      
-//      U = ((U * 5.0)/1024.0) / (R2/(R1+R2));
-//      
-//      if (U<0.09) {
-//        U=0.0;
-//      }
-      analogWrite(3, 255*power_1);
-      analogWrite(5, 255*power_2);
-      analogWrite(6, 255*power_3);
-      analogWrite(9, 255*power_4);
-      analogWrite(10, 255*power_5);
+      float I[CONS_COUNT] = {
+        sensor_0.getCurrentDC(),
+        sensor_1.getCurrentDC(),
+        sensor_2.getCurrentDC(),
+        sensor_3.getCurrentDC(),
+        sensor_4.getCurrentDC()
+      };
 
-      float I_1 = sensor_1.getCurrentDC();
-      float I_2 = sensor_2.getCurrentDC();
-      float I_3 = sensor_3.getCurrentDC();
-      float I_4 = sensor_4.getCurrentDC();
-      float I_5 = sensor_5.getCurrentDC();
-   
-      sum_1 = U*I_1;
-      sum_2 = U*I_2;
-      sum_3 = U*I_3;
-      sum_4 = U*I_4;
-      sum_5 = U*I_5;
-        
-      if(0.05 > sum_1){
-        analogWrite(5, 0);
-        analogWrite(6, 0);
-        analogWrite(9, 0);
-        analogWrite(10, 0);
-      }
-
-      if(3 > sum_2){
-        analogWrite(6, 0);
-        analogWrite(9, 0);
-        analogWrite(10, 0);
-      }
-    
-      if(0.4 > sum_3){
-        analogWrite(9, 0);
-        analogWrite(10, 0);
-      }
-      if(18 > sum_1){
-        analogWrite(10, 0);
-      }
+      if(millis() - last_pay_time > T)
+        for(int i = 0; i < CONS_COUNT; i++)
+          pay[i]+= U*I[i]*T/1000;  
 }
 
 void receiveEvent(int bytes) {
   if(bytes>1){
-    power_1 = Wire.read();
-    power_2 = Wire.read();
-    power_3 = Wire.read();
-    power_4 = Wire.read();
-    power_5 = Wire.read();
+    int pw = Wire.read();
+    for(int i = 0; i < CONS_COUNT; i++)
+      power[i] = pw & (1<<i);
+    prosumer_power = pw & (1<<CONS_COUNT);
   }
 }
+
 void requestEvent(){
-//   Wire.write("1");
-  Wire.write((uint8_t *)&sum_1, sizeof(&sum_1));//First
-  
-//   Wire.write("2");
-  Wire.write((uint8_t *)&sum_2, sizeof(&sum_2));//Second
-  
-//   Wire.write("3");
-  Wire.write((uint8_t *)&sum_3, sizeof(&sum_3, sizeof(&sum_3));
-  
-//  Wire.write("4");
-  Wire.write((uint8_t *)&sum_4, sizeof(&sum_4));
-
-//  Wire.write("5");
-  Wire.write((uint8_t *)&sum_5, sizeof(&sum_5));
-
-  Wire.write((uint8_t *)&U, sizeof(&U));
-
+  for(int i = 0; i < CONS_COUNT; i++)  
+    Wire.write((uint8_t *)&pay[i], sizeof(&pay[i]));
 }

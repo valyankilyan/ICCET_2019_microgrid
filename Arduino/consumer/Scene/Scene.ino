@@ -10,7 +10,7 @@ TMRpcm tmrpcm;
  
 bool work = 1, replay = 0;
 int sound_id = 1, old_sound_id = 0, boost = 0, old_boost = 0;
-long long int last_music_time = 0; 
+long long int last_music_time = 0, tim = 0 ; 
 
 char* music_list[SOUND_SIZE] = {
   "SILENSE",
@@ -44,6 +44,10 @@ void setup(){
  
  
 void loop(){  
+  if(tim - millis() > 10000){
+    Serial.println("it works");
+    tim = millis();
+  }
   while(boost != old_boost){
     tmrpcm.volume(boost > old_boost); 
     old_boost+= (boost > old_boost ? 1 : -1);  
@@ -73,10 +77,8 @@ void loop(){
 void receiveEvent(int bytes) {
   if(bytes > 1){
     sound_id = Wire.read() % SOUND_SIZE;
-    if(bytes > 1)
-      boost = Wire.read() % 5;
-    if(bytes > 1)
-      replay = Wire.read();
+    boost = Wire.read() % 5;
+    replay = Wire.read();
     Serial.print("sound_id = ");
     Serial.println((int)sound_id);
     Serial.print("boost = ");
