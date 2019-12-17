@@ -37,9 +37,9 @@ class Server(WebSocket):
     def send(self, string):
         self.sendMessage(string)
 
-    def run():
-        self.send(raw_input())
-    threading.Thread(target = run).start()
+    # def run():
+    #     self.send(raw_input())
+    # threading.Thread(target = run).start()
 
 
 print "starting server"
