@@ -8,7 +8,8 @@ import { store } from "./plugins/store"; //добавил сторе
 
 Vue.config.productionTip = false
 
-Vue.use(Socket, { url:'ws://3f1702aa.ngrok.io' });
+//Vue.use(Socket, { url:'ws://40f3e784.ngrok.io' });
+Vue.use(Socket, { url:'ws://192.168.43.100:8000' });
 
 new Vue({
   vuetify,
@@ -16,3 +17,5 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
+
+
