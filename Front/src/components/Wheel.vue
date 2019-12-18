@@ -11,7 +11,7 @@
           <v-switch v-model="currentSupply" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
         </span>
         <span>{{currentSupply ? 'on' : 'off'}}</span>
-        <span class="pl-4">Мощность {{ power }} Вт</span>
+        <span class="pl-4" >Мощность {{sum }} Вт*c</span>
       </v-container>
     </section>
 
@@ -89,6 +89,8 @@ import Pay from "@/plugins/pay.js";
 export default {
   data() {
     return {
+       sum:0,
+      obj:0,
       akbTimer: new Timer(),
       hydrogenTimer: new Timer(),
       power: 0,
@@ -138,6 +140,8 @@ export default {
   watch: {
     currentSupply: function() {
       this.sendData();
+      this.fun();
+     
 
       if (this.currentSupply) {
         if (this.tariff) {
@@ -162,6 +166,27 @@ export default {
     }
   },
   methods: {
+     fun(){
+  console.log('timed out function');
+   setTimeout(this.func, 2500);
+  },
+    func(){
+      let payload = {
+        type: "wheel",
+        ask: 1
+        
+     
+      };
+        console.log('timevsegerghergion');
+      this.$socket.send(JSON.stringify(payload));
+
+      this.$store.commit("SET_WHEEL", payload);
+      if(this.currentSupply){
+     setTimeout(this.fun, 2500);
+      }
+  },
+   
+
     pay() {
       const akbSeconds = this.akbTimer.seconds;
       const hydrogenSeconds = this.hydrogenTimer.seconds;
@@ -175,6 +200,9 @@ export default {
     },
     messageHandle(message) {
       console.log("обработано в Wheel " + message);
+      //  this.obj = JSON.parse(message)
+        this.obj = Number(message);
+        this.sum = this.sum + this.obj;
     },
     sendData() {
       let payload = {

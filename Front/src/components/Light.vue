@@ -19,7 +19,7 @@
       
 
       <v-container fluid class="d-flex mb-0 pb-0">
-        <h3 class="pl-3">Уровень красного:</h3>
+        <h3 class="pl-3">Дом №1:</h3>
 
         <v-slider
           :disabled="!currentSupply"
@@ -32,7 +32,7 @@
         ></v-slider>
       </v-container>
       <v-container fluid class="d-flex mb-0 pb-0">
-        <h3 class="pl-3">Уровень зеленого:</h3>
+        <h3 class="pl-3">Дом №2:</h3>
 
         <v-slider
           :disabled="!currentSupply"
@@ -44,7 +44,7 @@
         ></v-slider>
       </v-container>
       <v-container fluid class="d-flex mb-0 pb-0">
-        <h3 class="pl-3">Уровень голубого:</h3>
+        <h3 class="pl-3">Дом №3:</h3>
 
         <v-slider
           :disabled="!currentSupply"
@@ -55,7 +55,7 @@
         ></v-slider>
       </v-container>
 
-      <v-container fluid class="d-flex mb-0 pb-0">
+   <!--   <v-container fluid class="d-flex mb-0 pb-0">
         <h3 class="pl-3">Лампа на горе:</h3>
         <span>
           <v-switch
@@ -66,7 +66,7 @@
           ></v-switch>
         </span>
         <span>{{projector ? 'on' : 'off'}}</span>
-      </v-container>
+      </v-container>-->
     </section>
 
     <section>

@@ -42,9 +42,9 @@
         <v-btn color="cyan lighten-1" text>войти</v-btn>
       </router-link>
     </span>
-    <div v-for="itm in detail" :key="itm.name">
+  <!--  <div v-for="itm in detail" :key="itm.name">
       <p>{{itm.image}}</p>
-    </div>
+    </div>-->
   </v-card>
 </template>
 
