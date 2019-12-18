@@ -25,9 +25,19 @@ void loop() {
 
 void receiveEvent(int bytes) {
   if(bytes>1){
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 3; i++){
       light[i] =  double(Wire.read()) / 100 * 255;
+      Serial.print(light[i]);
+      Serial.print(" ");
+    }
           
     mountain_bright = Wire.read();
+    Serial.println(mountain_bright);
+    bytes-= 4;
+
+    while(bytes > 1){
+      bytes--;
+      Wire.read();
+      }
   }
 }

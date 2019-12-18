@@ -5,12 +5,14 @@
 #include <Wire.h>
 
 #define SOUND_SIZE 6
+#define speaker_pin 5
  
 TMRpcm tmrpcm;
  
 bool work = 1, replay = 0;
 int sound_id = 1, old_sound_id = 0, boost = 0, old_boost = 0;
 long long int last_music_time = 0, tim = 0 ; 
+
 
 char* music_list[SOUND_SIZE] = {
   "SILENSE",
@@ -35,24 +37,35 @@ void setup(){
   Wire.onReceive(receiveEvent);
   
   Serial.begin(9600);
+
+  for(int i = 0; i < 100; i++){
+    digitalWrite(speaker_pin, HIGH);
+    delay(100);
+    digitalWrite(speaker_pin, LOW);
+    delay(100);
+  }
   
-  tmrpcm.speakerPin = 9;
+  tmrpcm.speakerPin = speaker_pin;
   SD.begin(SD_ChipSelectPin);
   
   Serial.println("Start");
+
+//  for(int i = 2; i < 14; i++)
+//    pinMode(i,OUTPUT);
 }
  
  
 void loop(){  
-  if(tim - millis() > 10000){
+  if(millis() - tim > 1000){
     Serial.println("it works");
     tim = millis();
   }
+  
   while(boost != old_boost){
     tmrpcm.volume(boost > old_boost); 
     old_boost+= (boost > old_boost ? 1 : -1);  
   } 
-
+  
   if(millis() - last_music_time > music_len[sound_id]){
     if(replay)
       old_sound_id--;
@@ -72,6 +85,9 @@ void loop(){
 
       Serial.println(music_list[sound_id]);
   }
+  
+// digitalWrite(3, 255);
+//  Serial.println("hello");
 }
  
 void receiveEvent(int bytes) {

@@ -42,6 +42,7 @@ class Data:
 					read = bus.i2c_rdwr(msg)
 					for i in msg:
 						print int(i)
+					return msg
 				except IOError as e:
 					print "I/O error({0}): {1}".format(e.errno, e.strerror)
 					time.sleep(1)

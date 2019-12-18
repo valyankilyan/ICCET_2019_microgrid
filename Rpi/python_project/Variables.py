@@ -24,16 +24,16 @@ class Variables(object):
 
 	hydrogen_addr = 32
 	hydrogen_power = [0]#consumers bit in bytes 0-sc, 1-lt, 2-veg, 3-rd, 4-wh; 
-	hydrogen_pay = [0, 0, 0, 0, 0]
+	hydrogen_pay = [0, 0, 0, 0, 0, -1]
 	# 	scene_power, light_power, radio_power, vegetables_power, wheel power;
 
 	battery_addr = 33
 	battery_power = [0] #test r, g, b
-	battery_pay = [0, 0, 0, 0, 0]
+	battery_pay = [0, 0, 0, 0, 0, -1]
 
 	prosumer_addr = 34
 	prosumer_power = [0] #test r, g, b
-	prosumer_pay = [0, 0, 0, 0, 0]
+	prosumer_pay = [0, 0, 0, 0, 0, -1]
 
 	def __init__(self):
 		print "init var"

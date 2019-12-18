@@ -13,19 +13,23 @@ class Server(WebSocket):
 
     def handleMessage(self):
         
-        self.sendMessage(self.data)
-        print(self.data)
+        # self.sendMessage(self.data)
+        print "data = ", self.data
         try:
             dic = json.loads(self.data)
-            print dic
+            print "json to dic = ", dic
+
         except:
             error.log("data sent isn't JSON")
             self.sendMessage("you sent not JSON")
 
-        try:
-            consumer.new_data(dic)
-        except: 
-            error.log("consumer doesn't work")
+        a = consumer.new_data(dic) 
+        if a > 0:
+            print "a > 0, send power to andrew ", a
+            out = str(a)
+            self.sendMessage(out)
+        # except: 
+        #     error.log("consumer doesn't work (main/handleMessage)")
     
 
     def handleConnected(self):

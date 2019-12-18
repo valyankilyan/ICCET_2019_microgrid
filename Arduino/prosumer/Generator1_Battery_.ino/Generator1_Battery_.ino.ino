@@ -8,7 +8,7 @@ const int T = 50; // период измерения мощности
 
 bool power[CONS_COUNT] = {0, 0, 0, 0, 0}, prosumer_power = 0;//включено устройство от даного источника или нет 
 float pay[CONS_COUNT] = {0, 0, 0, 0, 0};//сколько натикало на каждом ватт секунд 
-int controll_pin[CONS_COUNT] = {3, 5, 6, 9, 10};//пины на которых сидят транзисторы
+int controll_pin[CONS_COUNT] = {3, 5, 6, 9, 10}, last = -1;//пины на которых сидят транзисторы
 
 long long int last_pay_time = 0;
 
@@ -55,7 +55,7 @@ void loop() {
 
       if(millis() - last_pay_time > T)
         for(int i = 0; i < CONS_COUNT; i++)
-          pay[i]+= U*I[i]*T/1000;  
+          pay[last]+= U*I[i]*T/1000;  
 }
 
 void receiveEvent(int bytes) {
@@ -64,10 +64,14 @@ void receiveEvent(int bytes) {
     for(int i = 0; i < CONS_COUNT; i++)
       power[i] = pw & (1<<i);
     prosumer_power = pw & (1<<CONS_COUNT);
+    last = Wire.read();
   }
 }
 
 void requestEvent(){
-  for(int i = 0; i < CONS_COUNT; i++)  
-    Wire.write((uint8_t *)&pay[i], sizeof(&pay[i]));
+  if(last != -1){
+    Wire.write((uint8_t *)&pay[last], sizeof(&pay[last]));
+    pay[last] = 0;
+    last = -1;
+  }
 }

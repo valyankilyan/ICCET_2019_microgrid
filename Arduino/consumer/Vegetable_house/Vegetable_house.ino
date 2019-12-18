@@ -27,7 +27,7 @@ void loop() {
   thermometer.read();
   sensor = thermometer.getTemperatureC();
   int temp = min(max(0, (temperature - sensor)*100), 255);
-  analogWrite(HOT_PIN, temp);
+  analogWrite(HOT_PIN, 255);
   
   for(int i = 0; i < 3; i++)
     analogWrite(light_pins[i], light[i] * bright);
@@ -50,6 +50,12 @@ void receiveEvent(int bytes) {
       Serial.print(" ");
     }
     Serial.println(" ");
+
+    bytes-= 5;
+    while(bytes > 1){
+      bytes--;
+      Wire.read();  
+    }
   }
 }
 
