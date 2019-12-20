@@ -11,7 +11,7 @@
           <v-switch v-model="currentSupply" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
         </span>
         <span>{{currentSupply ? 'on' : 'off'}}</span>
-        <span class="pl-4" >Мощность {{sum }} Втc</span>
+        <span class="pl-4">Мощность {{sum }} Втc</span>
       </v-container>
     </section>
 
@@ -23,7 +23,7 @@
             <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
               <h3 class="pl-6">Тариф:</h3>
               <v-select
-                 :disabled="!currentSupply"
+                :disabled="!currentSupply"
                 :items="items"
                 item-value="value"
                 item-text="name"
@@ -32,7 +32,7 @@
                 class="ma-0 pa-0 ml-3"
               ></v-select>
             </v-col>
-            <section>
+            <!--  <section>
               <v-container fluid class="d-flex mb-0 pb-0">
                 <h3 class="pl-3">Подача тока</h3>
                 <span>
@@ -42,7 +42,7 @@
                
               </v-container>
             </section>
-           <!-- <section class="d-flex mb-0 pb-0">
+           -- <section class="d-flex mb-0 pb-0">
               <span>
                 Аккумулятор
                 <br />7₽/кВт
@@ -65,10 +65,14 @@
                 {{this.akbTimer}} сек
               </p>
               <p>
+                <strong>Вы работаете от ProSumer-а:</strong>
+                {{this.ProSumerTimer}} сек
+              </p>
+              <p>
                 <strong>Вы работаете на водороде:</strong>
                 {{this.hydrogenTimer}} сек
               </p>
-               <p>
+              <p>
                 <strong>Вы работаете на HEAVY водороде:</strong>
                 {{this.hydro2Timer}} сек
               </p>
@@ -115,20 +119,21 @@ import Pay from "@/plugins/pay.js";
 export default {
   data() {
     return {
-      total:0,
-       sum:0,
-      obj:0,
+      total: 0,
+      sum: 0,
+      obj: 0,
       akbTimer: new Timer(),
       hydrogenTimer: new Timer(),
       hydro2Timer: new Timer(),
+      ProSumerTimer: new Timer(),
       power: 0,
       currentSupply: false, // значение слайдера on/off (true/false)
       selectTariff: 1,
       items: [
-        { name: 'АКБ 5₽/Втс ', value: 1 },
-        { name: 'Водородные батарейки 7₽/Втс', value: 2 },
-        { name: 'HEAVY Водородные батарейки 8₽/Втс', value: 3 },
-      
+        { name: "АКБ 5₽/Втс ", value: 1 },
+        { name: "ProSumer 11₽/Втс ", value: 2 },
+        { name: "Водородные батарейки 7₽/Втс", value: 3 },
+        { name: "HEAVY Водородные батарейки 8₽/Втс", value: 4 }
       ], //значение слайдера акум/солнце  (true/false)
       pays: [
         {
@@ -176,25 +181,26 @@ export default {
     currentSupply: function() {
       this.sendData();
       this.fun();
-    
 
       if (this.currentSupply) {
         if (this.selectTariff == 1) {
           this.akbTimer.start();
         } else {
-            if (this.selectTariff == 2) {
-            this.hydrogenTimer.start();
-            }  else {
-               if (this.selectTariff == 3) {
-            this.hydro2Timer.start();
+          if (this.selectTariff == 2) {
+            this.ProSumerTimer.start();
+          } else {
+            if (this.selectTariff == 3) {
+              this.hydrogenTimer.start();
+            } else {
+              if (this.selectTariff == 4) {
+                this.hydro2Timer.start();
+              }
             }
           }
-
-        
         }
-        
       } else {
         this.hydrogenTimer.stop();
+        this.ProSumerTimer.stop();
         this.hydro2Timer.stop();
         this.akbTimer.stop();
       }
@@ -202,52 +208,55 @@ export default {
     selectTariff: function() {
       this.sendData();
       this.selectTariff = this.selectTariff;
-     // this.currentSupply = false;
+      // this.currentSupply = false;
 
       if (this.selectTariff == 1) {
-        
         this.akbTimer.start();
         this.hydrogenTimer.stop();
-         this.hydro2Timer.stop();
+        this.hydro2Timer.stop();
+        this.ProSumerTimer.stop();
       } else {
-          
-          if (this.selectTariff == 2) {
-            
+        if (this.selectTariff == 2) {
+          this.ProSumerTimer.start();
+          this.akbTimer.stop();
+          this.hydrogenTimer.stop();
+          this.hydro2Timer.stop();
+        } else {
+          if (this.selectTariff == 3) {
+            this.ProSumerTimer.stop();
             this.akbTimer.stop();
             this.hydrogenTimer.start();
             this.hydro2Timer.stop();
           } else {
-            if (this.selectTariff == 3) {
-        
-        this.akbTimer.stop();
-        this.hydrogenTimer.stop();
-         this.hydro2Timer.start();
-      } 
+            if (this.selectTariff == 4) {
+              this.ProSumerTimer.stop();
+              this.akbTimer.stop();
+              this.hydrogenTimer.stop();
+              this.hydro2Timer.start();
+            }
           }
+        }
       }
     }
   },
   methods: {
-     fun(){
-  console.log('timed out function');
-   setTimeout(this.func, 2500);
-  },
-    func(){
+    fun() {
+      console.log("Привет от Wheel");
+      setTimeout(this.func, 2500);
+    },
+    func() {
       let payload = {
         type: "wheel",
         ask: 1
-        
-     
       };
-        console.log('timevsegerghergion');
+      console.log("Отправка JSON от Wheel ");
       this.$socket.send(JSON.stringify(payload));
 
       this.$store.commit("SET_WHEEL", payload);
-      if(this.currentSupply){
-     setTimeout(this.fun, 2500);
+      if (this.currentSupply) {
+        setTimeout(this.fun, 2500);
       }
-  },
-   
+    },
 
     pay() {
       const akbSeconds = this.akbTimer.seconds;
@@ -263,23 +272,23 @@ export default {
     messageHandle(message) {
       console.log("обработано в Wheel " + message);
       //  this.obj = JSON.parse(message)
-        this.obj = Number(message);
-       this.sum = this.sum + this.obj;
-      
-        
-        
-        if (this.selectTariff == 1) {
-        this.total = this.total + this.obj*5; 
-       
+      this.obj = Number(message);
+      this.sum = this.sum + this.obj;
+
+      if (this.selectTariff == 1) {
+        this.total = this.total + this.obj * 5;
       } else {
-          
-          if (this.selectTariff == 2) {
-            this.total = this.total + this.obj*7; 
+        if (this.selectTariff == 2) {
+          this.total = this.total + this.obj * 11;
+        } else {
+          if (this.selectTariff == 3) {
+            this.total = this.total + this.obj * 7;
           } else {
             if (this.selectTariff == 3) {
-        this.total = this.total + this.obj*8; 
-      } 
+              this.total = this.total + this.obj * 8;
+            }
           }
+        }
       }
     },
     sendData() {
