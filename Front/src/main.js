@@ -9,7 +9,7 @@ import { store } from "./plugins/store"; //добавил сторе
 Vue.config.productionTip = false
 
 //Vue.use(Socket, { url:'ws://40f3e784.ngrok.io' });
-Vue.use(Socket, { url:'ws://192.168.43.100:8000' });
+Vue.use(Socket, { url:'ws://7e21a1bc.ngrok.io' });
 
 new Vue({
   vuetify,

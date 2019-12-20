@@ -11,7 +11,7 @@
           <v-switch v-model="currentSupply" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
         </span>
         <span>{{currentSupply ? 'on' : 'off'}}</span>
-        <span class="pl-4" >Мощность {{sum }} Вт*c</span>
+        <span class="pl-4" >Мощность {{sum }} Втc</span>
       </v-container>
     </section>
 
@@ -20,17 +20,39 @@
         <v-expansion-panel>
           <v-expansion-panel-header>Ваш тариф</v-expansion-panel-header>
           <v-expansion-panel-content>
-            <section class="d-flex mb-0 pb-0">
+            <v-col class="d-flex ma-0 pa-0 algin-center" cols="12" sm="8">
+              <h3 class="pl-6">Тариф:</h3>
+              <v-select
+                 :disabled="!currentSupply"
+                :items="items"
+                item-value="value"
+                item-text="name"
+                v-model="selectTariff"
+                label=" Выбрать"
+                class="ma-0 pa-0 ml-3"
+              ></v-select>
+            </v-col>
+            <section>
+              <v-container fluid class="d-flex mb-0 pb-0">
+                <h3 class="pl-3">Подача тока</h3>
+                <span>
+                  <v-switch v-model="akbTariff" :label="``" class="ma-0 ml-3 pa-0"></v-switch>
+                </span>
+                <span>{{akbTariff ? 'on' : 'off'}}</span>
+               
+              </v-container>
+            </section>
+           <!-- <section class="d-flex mb-0 pb-0">
               <span>
                 Аккумулятор
                 <br />7₽/кВт
               </span>
-              <v-switch v-model="tariff" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
+              <v-switch v-model="selectTariff" :label="``" class="d-flex ma-0 ml-3 pa-0"></v-switch>
               <span>
                 Водородные батарейки
                 <br />5₽/кВт
               </span>
-            </section>
+            </section>-->
           </v-expansion-panel-content>
         </v-expansion-panel>
 
@@ -46,9 +68,13 @@
                 <strong>Вы работаете на водороде:</strong>
                 {{this.hydrogenTimer}} сек
               </p>
+               <p>
+                <strong>Вы работаете на HEAVY водороде:</strong>
+                {{this.hydro2Timer}} сек
+              </p>
               <span>
                 <strong>Сумма к оплате:</strong>
-                {{totalSum}}₽
+                {{total}}₽
               </span>
               <v-btn color="cyan lighten-1 pl-5" text @click="pay">Оплатить</v-btn>
             </section>
@@ -89,13 +115,21 @@ import Pay from "@/plugins/pay.js";
 export default {
   data() {
     return {
+      total:0,
        sum:0,
       obj:0,
       akbTimer: new Timer(),
       hydrogenTimer: new Timer(),
+      hydro2Timer: new Timer(),
       power: 0,
       currentSupply: false, // значение слайдера on/off (true/false)
-      tariff: false, //значение слайдера акум/солнце  (true/false)
+      selectTariff: 1,
+      items: [
+        { name: 'АКБ 5₽/Втс ', value: 1 },
+        { name: 'Водородные батарейки 7₽/Втс', value: 2 },
+        { name: 'HEAVY Водородные батарейки 8₽/Втс', value: 3 },
+      
+      ], //значение слайдера акум/солнце  (true/false)
       pays: [
         {
           id: 1,
@@ -121,7 +155,7 @@ export default {
     const wheel = this.$store.getters.WHEEL;
     if (wheel) {
       this.currentSupply = wheel.currentSupply;
-      this.tariff = wheel.tariff;
+      this.selectTariff = wheel.selectTariff;
     }
   },
   destroyed() {
@@ -131,8 +165,9 @@ export default {
     totalSum() {
       const akbSeconds = this.akbTimer.seconds;
       const hydrogenSeconds = this.hydrogenTimer.seconds;
+      const hydro2Seconds = this.hydro2Timer.seconds;
 
-      const pay = new Pay(akbSeconds, hydrogenSeconds);
+      const pay = new Pay(akbSeconds, hydrogenSeconds, hydro2Seconds);
 
       return pay.sum;
     }
@@ -141,27 +176,54 @@ export default {
     currentSupply: function() {
       this.sendData();
       this.fun();
-     
+    
 
       if (this.currentSupply) {
-        if (this.tariff) {
-          this.hydrogenTimer.start();
-        } else {
+        if (this.selectTariff == 1) {
           this.akbTimer.start();
+        } else {
+            if (this.selectTariff == 2) {
+            this.hydrogenTimer.start();
+            }  else {
+               if (this.selectTariff == 3) {
+            this.hydro2Timer.start();
+            }
+          }
+
+        
         }
+        
       } else {
         this.hydrogenTimer.stop();
+        this.hydro2Timer.stop();
         this.akbTimer.stop();
       }
     },
-    tariff: function() {
+    selectTariff: function() {
       this.sendData();
-      if (this.tariff) {
-        this.hydrogenTimer.start();
-        this.akbTimer.stop();
-      } else {
+      this.selectTariff = this.selectTariff;
+     // this.currentSupply = false;
+
+      if (this.selectTariff == 1) {
+        
         this.akbTimer.start();
-         this.hydrogenTimer.stop();
+        this.hydrogenTimer.stop();
+         this.hydro2Timer.stop();
+      } else {
+          
+          if (this.selectTariff == 2) {
+            
+            this.akbTimer.stop();
+            this.hydrogenTimer.start();
+            this.hydro2Timer.stop();
+          } else {
+            if (this.selectTariff == 3) {
+        
+        this.akbTimer.stop();
+        this.hydrogenTimer.stop();
+         this.hydro2Timer.start();
+      } 
+          }
       }
     }
   },
@@ -202,13 +264,29 @@ export default {
       console.log("обработано в Wheel " + message);
       //  this.obj = JSON.parse(message)
         this.obj = Number(message);
-        this.sum = this.sum + this.obj;
+       this.sum = this.sum + this.obj;
+      
+        
+        
+        if (this.selectTariff == 1) {
+        this.total = this.total + this.obj*5; 
+       
+      } else {
+          
+          if (this.selectTariff == 2) {
+            this.total = this.total + this.obj*7; 
+          } else {
+            if (this.selectTariff == 3) {
+        this.total = this.total + this.obj*8; 
+      } 
+          }
+      }
     },
     sendData() {
       let payload = {
         type: "Wheel",
         currentSupply: this.currentSupply, // значение слайдера on/off (true/false)
-        tariff: this.tariff //значение слайдера акум/солнце  (true/false)
+        selectTariff: this.selectTariff //значение слайдера акум/солнце  (true/false)
       };
 
       this.$socket.send(JSON.stringify(payload));
